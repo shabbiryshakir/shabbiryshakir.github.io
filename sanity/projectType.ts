@@ -31,6 +31,13 @@ export const project = {
       to: [{ type: 'category' }] 
     },
     {
+  name: 'isExternalMedia',
+  title: 'External Case Study (Do Not Embed)',
+  type: 'boolean',
+  initialValue: false,
+  description: 'Turn this ON for client/institutional work. It prevents the media from embedding directly and instead creates a secure "View Link" case study window.',
+},
+    {
       name: 'uploadFile',
       title: 'Upload PDF / Document',
       type: 'file',
@@ -42,7 +49,14 @@ export const project = {
       title: 'Upload High-Res Image',
       type: 'image',
       description: 'Upload a specific image for the photo viewer. (Overrides cover image)'
-    }
+    },
+    {
+  name: 'showExternalLink',
+  title: 'Show "Open in Browser" Button',
+  type: 'boolean',
+  initialValue: false,
+  description: 'Turn this on if this is a real, usable website and you want to show a button to open it in a new browser tab.',
+}
     
   ]
 }
