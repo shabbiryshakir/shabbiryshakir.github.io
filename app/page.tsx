@@ -244,6 +244,7 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
       
       {/* --- MEDIA DISPLAY AREA --- */}
       <div className="flex-1 w-full relative overflow-hidden flex items-center justify-center">
+        {/* 💡 THE SECURE EXTERNAL CASE STUDY UI */}
         {data.isExternalMedia ? (
           <div className="flex-1 w-full h-full bg-[#0a0a0c] flex flex-col items-center justify-center p-6 md:p-10 text-center relative overflow-hidden">
              {finalImageUrl && (
@@ -311,6 +312,7 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
         )}
       </div>
 
+      {/* 💡 UNIVERSAL DESCRIPTION BOTTOM BAR (Hides for websites & external media to save space) */}
       {(!isWeb && !data.isExternalMedia) && (
         <div className="w-full bg-[#1a1a1c] border-t border-white/10 p-4 md:p-6 flex flex-col justify-center z-20 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
           <h3 className="text-white text-base md:text-lg font-bold tracking-wide">{data.title}</h3>
@@ -375,6 +377,19 @@ export default function VisionOSPortfolio() {
     }, interval);
     return () => clearInterval(timer);
   }, [showBootScreen, bootProgress]);
+
+  // 💡 THE MISSING UNLOCK COMMAND (Fixes Boot Screen Freeze)
+  useEffect(() => {
+    if (bootProgress >= 100 && showBootScreen) {
+      const timeout = setTimeout(() => {
+        setShowBootScreen(false);
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('hasBooted', 'true');
+        }
+      }, 400);
+      return () => clearTimeout(timeout);
+    }
+  }, [bootProgress, showBootScreen]);
 
   useEffect(() => {
     const fetchSanityData = async () => {
