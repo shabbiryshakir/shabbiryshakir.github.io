@@ -41,8 +41,10 @@ export default async function ProjectDemoPage({ params }: PageProps) {
     "profile": *[_type == "profile"][0]{ name, "profileImage": profileImage.asset->url },
     "project": *[_type == "project" && slug.current == $slug][0]{
       title, description, projectType, link, color, showExternalLink, isExternalMedia,
-      "contentImageUrl": coalesce(uploadImage.asset->url, image.asset->url), 
-      "fileUrl": coalesce(uploadFile.asset->url, file.asset->url)
+      "coverUrl": coalesce(coverImage.asset->url, uploadImage.asset->url, image.asset->url),
+      "contentImageUrl": coalesce(uploadImage.asset->url, image.asset->url),
+      "fileUrl": coalesce(uploadFile.asset->url, file.asset->url),
+      "videoUrl": uploadVideo.asset->url
     }
   }`;
   
@@ -203,7 +205,20 @@ export default async function ProjectDemoPage({ params }: PageProps) {
               ) : (
                 <>
                   {isWeb && project.link && <iframe src={project.link} className="w-full h-full border-none" title={project.title} sandbox="allow-scripts allow-same-origin allow-forms allow-popups" />}
-                  {isVideo && project.link && <iframe src={getYouTubeEmbedUrl(project.link) || project.link} className="w-full h-full border-none bg-black" allowFullScreen />}
+                  {isVideo && project.videoUrl && (
+                    <video
+                      src={project.videoUrl}
+                      poster={project.coverUrl || project.contentImageUrl}
+                      controls
+                      autoPlay
+                      muted
+                      playsInline
+                      controlsList="nodownload noplaybackrate"
+                      disablePictureInPicture
+                      className="w-full h-full bg-black object-contain"
+                    />
+                  )}
+                  {isVideo && !project.videoUrl && project.link && <iframe src={getYouTubeEmbedUrl(project.link) || project.link} className="w-full h-full border-none bg-black" allowFullScreen />}
                   {isPdf && finalPdfUrl && <iframe src={`${finalPdfUrl}#toolbar=0`} className="w-full h-full border-none bg-[#323639]" title={project.title} />}
 
                   {isInstagram && project.link && (
@@ -226,7 +241,7 @@ export default async function ProjectDemoPage({ params }: PageProps) {
                       </div>
                   )}
 
-                  {((isWeb || isVideo || isPdf || isPhoto || isInstagram) && !finalPdfUrl && !project.link && !finalImageUrl) && (
+                  {((isWeb || isVideo || isPdf || isPhoto || isInstagram) && !finalPdfUrl && !project.link && !finalImageUrl && !project.videoUrl) && (
                     <div className="flex-1 flex flex-col items-center justify-center text-center p-8 text-white">
                         <i className={`${isInstagram ? 'fab fa-instagram' : 'fas ' + (isPdf ? 'fa-file-pdf' : isWeb ? 'fa-code' : 'fa-video')} text-6xl mb-6 opacity-20`}></i>
                         <h2 className="text-2xl font-bold mb-2">{project.title}</h2>

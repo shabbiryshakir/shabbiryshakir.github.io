@@ -20,7 +20,7 @@ interface LifeNode {
   info?: string; type: 'category' | 'project'; link?: string; 
   coverUrl?: string; contentImageUrl?: string; 
   parentId?: string; skillsList?: Skill[]; nested?: LifeNode[]; projectType?: string;
-  fileUrl?: string; showExternalLink?: boolean; isExternalMedia?: boolean;
+  fileUrl?: string; videoUrl?: string; showExternalLink?: boolean; isExternalMedia?: boolean;
 }
 interface AppWindow { id: string; title: string; data: LifeNode; }
 
@@ -342,7 +342,21 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
         ) : (
           <>
             {isWeb && data.link && <iframe src={data.link} className="w-full h-full border-none" title={data.title} sandbox="allow-scripts allow-same-origin allow-forms allow-popups" />}
-            {isVideo && data.link && <iframe src={getYouTubeEmbedUrl(data.link) || data.link} className="w-full h-full border-none bg-black" allowFullScreen />}
+            {isVideo && data.videoUrl && (
+              <video
+                src={data.videoUrl}
+                poster={data.coverUrl || data.contentImageUrl}
+                controls
+                autoPlay
+                muted
+                playsInline
+                controlsList="nodownload noplaybackrate"
+                disablePictureInPicture
+                onContextMenu={(e) => e.preventDefault()}
+                className="w-full h-full bg-black object-contain"
+              />
+            )}
+            {isVideo && !data.videoUrl && data.link && <iframe src={getYouTubeEmbedUrl(data.link) || data.link} className="w-full h-full border-none bg-black" allowFullScreen />}
             {isPdf && finalPdfUrl && <iframe src={`${finalPdfUrl}#toolbar=0`} className="w-full h-full border-none bg-[#323639]" title={data.title} />}
 
             {isInstagram && data.link && (
@@ -365,7 +379,7 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
                 </div>
             )}
 
-            {((isWeb || isVideo || isPdf || isPhoto || isInstagram) && !finalPdfUrl && !data.link && !finalImageUrl) && (
+            {((isWeb || isVideo || isPdf || isPhoto || isInstagram) && !finalPdfUrl && !data.link && !finalImageUrl && !data.videoUrl) && (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-8 text-white">
                   <i className={`${isInstagram ? 'fab fa-instagram' : 'fas ' + (isPdf ? 'fa-file-pdf' : isWeb ? 'fa-code' : 'fa-video')} text-6xl mb-6 opacity-20`}></i>
                   <h2 className="text-2xl font-bold mb-2">{data.title}</h2>
@@ -461,12 +475,13 @@ export default function VisionOSPortfolio() {
           "profileImage": profileImage.asset->url
         },
         "categories": *[_type == "category"]{ title, description, info, color, icon, skillsList[]{skillName, percentage}, "id": slug.current, "parentId": parent->slug.current },
-        "projects": *[_type == "project"]{ 
+        "projects": *[_type == "project"]{
           title, description, projectType, link, color, showExternalLink, isExternalMedia,
-          "id": slug.current, "categoryId": category->slug.current, 
+          "id": slug.current, "categoryId": category->slug.current,
           "coverUrl": coalesce(coverImage.asset->url, uploadImage.asset->url, image.asset->url),
           "contentImageUrl": coalesce(uploadImage.asset->url, image.asset->url),
-          "fileUrl": coalesce(uploadFile.asset->url, file.asset->url)
+          "fileUrl": coalesce(uploadFile.asset->url, file.asset->url),
+          "videoUrl": uploadVideo.asset->url
         }
       }`;
       try {
@@ -476,11 +491,12 @@ export default function VisionOSPortfolio() {
         const nodeMap = new Map();
         data.categories.forEach((c: any) => nodeMap.set(c.id, { ...c, type: 'category', nested: [] }));
         data.projects.forEach((p: any) => {
-          const projNode = { 
-            id: p.id, title: p.title, description: p.description, info: p.description, 
-            color: p.color || '#ffffff', type: 'project', link: p.link, 
+          const projNode = {
+            id: p.id, title: p.title, description: p.description, info: p.description,
+            color: p.color || '#ffffff', type: 'project', link: p.link,
             coverUrl: p.coverUrl, contentImageUrl: p.contentImageUrl,
-            projectType: p.projectType, fileUrl: p.fileUrl, showExternalLink: p.showExternalLink,
+            projectType: p.projectType, fileUrl: p.fileUrl, videoUrl: p.videoUrl,
+            showExternalLink: p.showExternalLink,
             isExternalMedia: p.isExternalMedia
           };
           if (p.categoryId && nodeMap.has(p.categoryId)) nodeMap.get(p.categoryId).nested.push(projNode);
