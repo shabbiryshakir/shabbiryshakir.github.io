@@ -573,7 +573,7 @@ export default function VisionOSPortfolio() {
             </div>
             <span className="text-sm font-semibold tracking-wide truncate max-w-[150px]">{userProfile?.name || "Shabbir Shakir"}</span>
             <span className="text-xs font-medium text-white/40 px-3 border-l border-white/10 uppercase hidden sm:block">
-              {activeWindowId ? activeWindowId : 'Finder'}
+              {activeWindowId ? (openWindows.find(w => w.id === activeWindowId)?.title || 'Finder') : 'Finder'}
             </span>
           </div>
           <div className="flex items-center gap-4 text-xs font-medium text-white/80">
@@ -695,11 +695,11 @@ export default function VisionOSPortfolio() {
                     </div>
 
                     <div className="w-24 md:w-32 flex justify-end items-center gap-3">
-                      {window.data.showExternalLink && window.data.link && !window.data.isExternalMedia && (
-                        <a 
-                          href={window.data.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                      {window.data.link && !window.data.isExternalMedia && (
+                        <a
+                          href={window.data.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="flex items-center justify-center w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 border border-white/5 transition-all group/link"
                           title="Open in new tab"
                           onClick={(e) => e.stopPropagation()}
@@ -846,7 +846,7 @@ export default function VisionOSPortfolio() {
           {openWindows.length > 0 && dockLinks.length > 0 && <div className="w-px h-10 bg-white/10 mx-2"></div>}
           
           {dockLinks.map((item, idx) => (
-            <a key={idx} href={item.l} target="_blank" className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-all hover:scale-110 pointer-events-auto group shadow-md relative overflow-hidden">
+            <a key={idx} href={item.l} target="_blank" rel="noopener noreferrer" className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-all hover:scale-110 pointer-events-auto group shadow-md relative overflow-hidden">
               <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-white transition-opacity"></div>
               <i className={`${item.b ? 'fab' : 'fas'} ${item.icon} text-2xl md:text-3xl text-white/80 transition-colors ${item.color}`}></i>
             </a>

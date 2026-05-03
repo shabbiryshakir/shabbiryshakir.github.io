@@ -128,11 +128,11 @@ export default async function ProjectDemoPage({ params }: PageProps) {
             </div>
             
             <div className="w-1/3 flex justify-end items-center gap-3">
-               {project.showExternalLink && project.link && !project.isExternalMedia && (
-                  <a 
-                    href={project.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+               {project.link && !project.isExternalMedia && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 transition-all border border-white/10 group/link"
                   >
                      <span className="hidden md:block text-[9px] font-bold tracking-wider uppercase text-white/80 group-hover/link:text-white">Open Browser</span>
