@@ -25,6 +25,14 @@ const getYouTubeEmbedUrl = (url: string | null) => {
   return match ? `https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0` : url;
 };
 
+const getInstagramEmbedUrl = (url: string | null) => {
+  if (!url) return null;
+  const match = url.match(/instagram\.com\/(p|reel|reels|tv)\/([^\/?#]+)/i);
+  if (!match) return url;
+  const kind = match[1].toLowerCase() === "reels" ? "reel" : match[1].toLowerCase();
+  return `https://www.instagram.com/${kind}/${match[2]}/embed`;
+};
+
 export default async function ProjectDemoPage({ params }: PageProps) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
@@ -47,10 +55,11 @@ export default async function ProjectDemoPage({ params }: PageProps) {
   const themeColor = project.color || "#4da6ff";
   
   const rawType = (project.projectType || "").toLowerCase();
-  const isVideo = rawType.includes("video") || rawType.includes("film") || rawType.includes("movie");
+  const isInstagram = rawType.includes("instagram") || rawType.includes("insta");
+  const isVideo = !isInstagram && (rawType.includes("video") || rawType.includes("film") || rawType.includes("movie"));
   const isPdf = rawType.includes("pdf") || rawType.includes("document") || project.fileUrl;
   const isPhoto = rawType.includes("photo") || rawType.includes("poster") || rawType.includes("image") || project.contentImageUrl;
-  const isWeb = !isVideo && !isPhoto && !isPdf;
+  const isWeb = !isVideo && !isPhoto && !isPdf && !isInstagram;
 
   const finalPdfUrl = project.fileUrl || project.link;
   const finalImageUrl = project.contentImageUrl; 
@@ -196,7 +205,20 @@ export default async function ProjectDemoPage({ params }: PageProps) {
                   {isWeb && project.link && <iframe src={project.link} className="w-full h-full border-none" title={project.title} sandbox="allow-scripts allow-same-origin allow-forms allow-popups" />}
                   {isVideo && project.link && <iframe src={getYouTubeEmbedUrl(project.link) || project.link} className="w-full h-full border-none bg-black" allowFullScreen />}
                   {isPdf && finalPdfUrl && <iframe src={`${finalPdfUrl}#toolbar=0`} className="w-full h-full border-none bg-[#323639]" title={project.title} />}
-                  
+
+                  {isInstagram && project.link && (
+                    <div className="w-full h-full overflow-y-auto bg-gradient-to-br from-[#1a0a1c] via-[#0a0a0c] to-[#0a0a1c] flex justify-center items-start p-4 md:p-8">
+                      <iframe
+                        src={getInstagramEmbedUrl(project.link) || project.link}
+                        className="w-full max-w-[540px] border-none bg-white rounded-2xl shadow-2xl"
+                        style={{ height: "780px" }}
+                        title={project.title}
+                        scrolling="no"
+                        allowFullScreen
+                      />
+                    </div>
+                  )}
+
                   {isPhoto && finalImageUrl && (
                       <div className="relative w-full h-full flex items-center justify-center p-4 md:p-8 bg-[#111111]">
                         <img src={finalImageUrl} draggable="false" className="w-full h-full object-contain rounded shadow-2xl select-none pointer-events-none" alt={project.title} />
@@ -204,9 +226,9 @@ export default async function ProjectDemoPage({ params }: PageProps) {
                       </div>
                   )}
 
-                  {((isWeb || isVideo || isPdf || isPhoto) && !finalPdfUrl && !project.link && !finalImageUrl) && (
+                  {((isWeb || isVideo || isPdf || isPhoto || isInstagram) && !finalPdfUrl && !project.link && !finalImageUrl) && (
                     <div className="flex-1 flex flex-col items-center justify-center text-center p-8 text-white">
-                        <i className={`fas ${isPdf ? 'fa-file-pdf' : isWeb ? 'fa-code' : 'fa-video'} text-6xl mb-6 opacity-20`}></i>
+                        <i className={`${isInstagram ? 'fab fa-instagram' : 'fas ' + (isPdf ? 'fa-file-pdf' : isWeb ? 'fa-code' : 'fa-video')} text-6xl mb-6 opacity-20`}></i>
                         <h2 className="text-2xl font-bold mb-2">{project.title}</h2>
                         <p className="max-w-md text-sm text-white/40">File or Link not uploaded yet.</p>
                     </div>
@@ -215,7 +237,7 @@ export default async function ProjectDemoPage({ params }: PageProps) {
               )}
             </div>
 
-            {(!isWeb && !project.isExternalMedia) && (
+            {(!isWeb && !isInstagram && !project.isExternalMedia) && (
               <div className="w-full bg-[#1a1a1c] border-t border-white/10 p-4 md:p-6 flex flex-col justify-center z-20 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
                 <h3 className="text-white text-base md:text-lg font-bold tracking-wide">{project.title}</h3>
                 {project.description && <p className="text-white/60 text-xs md:text-sm mt-1.5 leading-relaxed font-light max-w-4xl">{project.description}</p>}

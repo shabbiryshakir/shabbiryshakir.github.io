@@ -6,13 +6,12 @@ import * as THREE from "three";
 import { Environment, Sphere, MeshDistortMaterial, Float, Icosahedron, Torus } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "next-sanity";
-import { useRouter } from "next/navigation";
 
 const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID, 
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: "production",
   apiVersion: "2024-01-01",
-  useCdn: true,
+  useCdn: false,
 });
 
 interface Skill { skillName: string; percentage: number; }
@@ -230,11 +229,20 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
     return match ? `https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0` : url;
   };
 
+  const getInstagramEmbedUrl = (url: string | null) => {
+    if (!url) return null;
+    const match = url.match(/instagram\.com\/(p|reel|reels|tv)\/([^\/?#]+)/i);
+    if (!match) return url;
+    const kind = match[1].toLowerCase() === "reels" ? "reel" : match[1].toLowerCase();
+    return `https://www.instagram.com/${kind}/${match[2]}/embed`;
+  };
+
   const rawType = (data.projectType || "website").toLowerCase();
-  const isVideo = rawType.includes("video") || rawType.includes("film") || rawType.includes("movie");
+  const isInstagram = rawType.includes("instagram") || rawType.includes("insta");
+  const isVideo = !isInstagram && (rawType.includes("video") || rawType.includes("film") || rawType.includes("movie"));
   const isPdf = rawType.includes("pdf") || rawType.includes("document");
   const isPhoto = rawType.includes("photo") || rawType.includes("poster") || rawType.includes("image");
-  const isWeb = !isVideo && !isPhoto && !isPdf;
+  const isWeb = !isVideo && !isPhoto && !isPdf && !isInstagram;
 
   const finalPdfUrl = data.fileUrl || data.link;
   const finalImageUrl = data.contentImageUrl; 
@@ -293,7 +301,20 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
             {isWeb && data.link && <iframe src={data.link} className="w-full h-full border-none" title={data.title} sandbox="allow-scripts allow-same-origin allow-forms allow-popups" />}
             {isVideo && data.link && <iframe src={getYouTubeEmbedUrl(data.link) || data.link} className="w-full h-full border-none bg-black" allowFullScreen />}
             {isPdf && finalPdfUrl && <iframe src={`${finalPdfUrl}#toolbar=0`} className="w-full h-full border-none bg-[#323639]" title={data.title} />}
-            
+
+            {isInstagram && data.link && (
+              <div className="w-full h-full overflow-y-auto custom-scrollbar bg-gradient-to-br from-[#1a0a1c] via-[#0a0a0c] to-[#0a0a1c] flex justify-center items-start p-4 md:p-8">
+                <iframe
+                  src={getInstagramEmbedUrl(data.link) || data.link}
+                  className="w-full max-w-[540px] border-none bg-white rounded-2xl shadow-2xl"
+                  style={{ height: "780px" }}
+                  title={data.title}
+                  scrolling="no"
+                  allowFullScreen
+                />
+              </div>
+            )}
+
             {isPhoto && finalImageUrl && (
                 <div className="relative w-full h-full flex items-center justify-center p-4 md:p-8 bg-[#111111]">
                   <img src={finalImageUrl} draggable="false" className="w-full h-full object-contain rounded shadow-2xl select-none pointer-events-none" alt={data.title} />
@@ -301,9 +322,9 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
                 </div>
             )}
 
-            {((isWeb || isVideo || isPdf || isPhoto) && !finalPdfUrl && !data.link && !finalImageUrl) && (
+            {((isWeb || isVideo || isPdf || isPhoto || isInstagram) && !finalPdfUrl && !data.link && !finalImageUrl) && (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-8 text-white">
-                  <i className={`fas ${isPdf ? 'fa-file-pdf' : isWeb ? 'fa-code' : 'fa-video'} text-6xl mb-6 opacity-20`}></i>
+                  <i className={`${isInstagram ? 'fab fa-instagram' : 'fas ' + (isPdf ? 'fa-file-pdf' : isWeb ? 'fa-code' : 'fa-video')} text-6xl mb-6 opacity-20`}></i>
                   <h2 className="text-2xl font-bold mb-2">{data.title}</h2>
                   <p className="max-w-md text-sm text-white/40">File or Link not uploaded yet.</p>
               </div>
@@ -312,8 +333,8 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
         )}
       </div>
 
-      {/* 💡 UNIVERSAL DESCRIPTION BOTTOM BAR (Hides for websites & external media to save space) */}
-      {(!isWeb && !data.isExternalMedia) && (
+      {/* 💡 UNIVERSAL DESCRIPTION BOTTOM BAR (Hides for websites, instagram & external media to save space) */}
+      {(!isWeb && !isInstagram && !data.isExternalMedia) && (
         <div className="w-full bg-[#1a1a1c] border-t border-white/10 p-4 md:p-6 flex flex-col justify-center z-20 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
           <h3 className="text-white text-base md:text-lg font-bold tracking-wide">{data.title}</h3>
           {data.description && <p className="text-white/60 text-xs md:text-sm mt-1.5 leading-relaxed font-light max-w-4xl">{data.description}</p>}
@@ -326,8 +347,6 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
 
 // --- 4. MAIN OS COMPONENT ---
 export default function VisionOSPortfolio() {
-  const router = useRouter(); 
-  
   const [time, setTime] = useState("");
   const [openWindows, setOpenWindows] = useState<AppWindow[]>([]);
   const [activeWindowId, setActiveWindowId] = useState<string | null>(null);
@@ -625,10 +644,11 @@ export default function VisionOSPortfolio() {
               const isProjectApp = window.data.type === 'project';
               
               const winRawType = (window.data.projectType || "website").toLowerCase();
-              const winIsVideo = winRawType.includes("video") || winRawType.includes("film") || winRawType.includes("movie");
+              const winIsInstagram = winRawType.includes("instagram") || winRawType.includes("insta");
+              const winIsVideo = !winIsInstagram && (winRawType.includes("video") || winRawType.includes("film") || winRawType.includes("movie"));
               const winIsPdf = winRawType.includes("pdf") || winRawType.includes("document");
               const winIsPhoto = winRawType.includes("photo") || winRawType.includes("poster") || winRawType.includes("image");
-              const isWebProject = isProjectApp && !winIsVideo && !winIsPhoto && !winIsPdf;
+              const isWebProject = isProjectApp && !winIsVideo && !winIsPhoto && !winIsPdf && !winIsInstagram;
 
               return (
                 <motion.div
@@ -772,12 +792,14 @@ export default function VisionOSPortfolio() {
                               {window.data.nested.map((proj) => {
                                 const isFolder = proj.type === 'category'; 
                                 
-                                let BadgeIcon = "fa-compass"; let BadgeColor = "bg-blue-500";
+                                let BadgeIcon = "fa-compass"; let BadgeColor = "bg-blue-500"; let BadgePrefix: 'fas' | 'fab' = 'fas';
+                                let isInstagramItem = false;
                                 if (isFolder) {
                                    BadgeIcon = "fa-folder-open"; BadgeColor = "bg-gray-600";
                                 } else {
                                    const rawType = (proj.projectType || "").toLowerCase();
-                                   if (rawType.includes("video") || rawType.includes("movie")) { BadgeIcon = "fa-play"; BadgeColor = "bg-red-500"; }
+                                   if (rawType.includes("instagram") || rawType.includes("insta")) { BadgeIcon = "fa-instagram"; BadgeColor = "bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600"; BadgePrefix = 'fab'; isInstagramItem = true; }
+                                   else if (rawType.includes("video") || rawType.includes("movie")) { BadgeIcon = "fa-play"; BadgeColor = "bg-red-500"; }
                                    else if (rawType.includes("pdf") || rawType.includes("doc") || proj.fileUrl) { BadgeIcon = "fa-file-pdf"; BadgeColor = "bg-orange-500"; }
                                    else if (rawType.includes("photo") || rawType.includes("image") || proj.contentImageUrl) { BadgeIcon = "fa-image"; BadgeColor = "bg-purple-500"; }
                                 }
@@ -785,10 +807,9 @@ export default function VisionOSPortfolio() {
                                 const displayImage = proj.coverUrl;
 
                                 return (
-                                  <div key={proj.id} onClick={(e) => { 
-                                     e.stopPropagation(); 
-                                     if (isFolder) openApp(proj);
-                                     else router.push(`/demo/${proj.id}`); 
+                                  <div key={proj.id} onClick={(e) => {
+                                     e.stopPropagation();
+                                     openApp(proj);
                                   }} className="flex flex-col items-center gap-4 cursor-pointer group">
                                     <div className="relative">
                                       <div className="w-24 h-24 md:w-20 md:h-20 rounded-3xl md:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-all group-hover:bg-white/15 overflow-hidden active:scale-95 shadow-xl relative">
@@ -798,13 +819,17 @@ export default function VisionOSPortfolio() {
                                              <i className={`fas ${proj.icon || 'fa-folder'} text-3xl`} style={{ color: proj.color || '#ffffff' }}></i>
                                            </>
                                         ) : displayImage ? (
-                                           <img src={displayImage} className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100" /> 
+                                           <img src={displayImage} className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100" />
+                                        ) : isInstagramItem ? (
+                                           <div className="absolute inset-0 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center">
+                                             <i className="fab fa-instagram text-4xl text-white drop-shadow-lg"></i>
+                                           </div>
                                         ) : (
                                            <i className="fas fa-file-code text-4xl text-white/60"></i>
                                         )}
                                       </div>
                                       <div className={`absolute -bottom-2 -right-2 w-8 h-8 md:w-7 md:h-7 ${BadgeColor} border-2 border-[#1a1a1c] rounded-full flex items-center justify-center shadow-lg z-20`}>
-                                         <i className={`fas ${BadgeIcon} text-xs md:text-[10px] text-white ml-[1px]`}></i>
+                                         <i className={`${BadgePrefix} ${BadgeIcon} text-xs md:text-[10px] text-white ml-[1px]`}></i>
                                       </div>
                                     </div>
                                     <span className="text-xs font-medium text-white/80 text-center leading-tight line-clamp-2 w-full px-1">{proj.title}</span>
@@ -826,9 +851,11 @@ export default function VisionOSPortfolio() {
         <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 md:gap-5 px-4 md:px-6 py-3 md:py-4 bg-[#1a1a1c]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] z-[100] pointer-events-auto shadow-2xl">
           {openWindows.map(app => {
             let dockIcon = app.data.icon || 'fa-folder';
+            let dockIconPrefix: 'fas' | 'fab' = 'fas';
             if (app.data.type === 'project') {
                const rawType = (app.data.projectType || "").toLowerCase();
-               if (rawType.includes("video") || rawType.includes("movie")) dockIcon = "fa-file-video";
+               if (rawType.includes("instagram") || rawType.includes("insta")) { dockIcon = "fa-instagram"; dockIconPrefix = 'fab'; }
+               else if (rawType.includes("video") || rawType.includes("movie")) dockIcon = "fa-file-video";
                else if (rawType.includes("pdf")) dockIcon = "fa-file-pdf";
                else if (rawType.includes("photo") || rawType.includes("image")) dockIcon = "fa-file-image";
                else dockIcon = "fa-compass";
@@ -837,7 +864,7 @@ export default function VisionOSPortfolio() {
               <button key={app.id} onClick={(e) => { e.stopPropagation(); openApp(app.data); }} className="relative group flex flex-col items-center pointer-events-auto">
                 <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg relative overflow-hidden pointer-events-none">
                   <div className="absolute inset-0 opacity-20" style={{ backgroundColor: app.data.color }}></div>
-                  <i className={`fas ${dockIcon} text-2xl md:text-3xl`} style={{ color: app.data.color || '#ffffff' }}></i>
+                  <i className={`${dockIconPrefix} ${dockIcon} text-2xl md:text-3xl`} style={{ color: app.data.color || '#ffffff' }}></i>
                 </div>
                 <div className={`w-1.5 h-1.5 rounded-full mt-2 transition-all ${minimizedWindows.includes(app.id) ? 'bg-white/30' : (activeWindowId === app.id ? 'bg-white' : 'bg-white/60')}`}></div>
               </button>

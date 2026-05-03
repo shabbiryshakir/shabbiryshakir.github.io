@@ -5,8 +5,26 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
+  metadataBase: new URL("https://shabbiryshakir.github.io"),
   title: "Shabbir Shakir | Workspace",
-  description: "Futuristic OS Portfolio",
+  description:
+    "Futuristic OS-style portfolio of Shabbir Shakir — System Architect, teacher, and developer. Explore projects, designs, and writing in an interactive workspace.",
+  openGraph: {
+    title: "Shabbir Shakir | Workspace",
+    description:
+      "Futuristic OS-style portfolio of Shabbir Shakir — System Architect, teacher, and developer.",
+    url: "https://shabbiryshakir.github.io",
+    siteName: "Shabbir Shakir",
+    images: [{ url: "/profile.jpg", width: 1200, height: 1200, alt: "Shabbir Shakir" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shabbir Shakir | Workspace",
+    description:
+      "Futuristic OS-style portfolio of Shabbir Shakir — System Architect, teacher, and developer.",
+    images: ["/profile.jpg"],
+  },
 };
 
 export default function RootLayout({

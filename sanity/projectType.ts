@@ -16,7 +16,8 @@ export const project = {
           { title: 'Website / Web App', value: 'website' },
           { title: 'Video / YouTube', value: 'video' },
           { title: 'Photo / Design', value: 'photo' },
-          { title: 'PDF / Document', value: 'pdf' }
+          { title: 'PDF / Document', value: 'pdf' },
+          { title: 'Instagram Post / Reel', value: 'instagram' }
         ]
       },
       initialValue: 'website'
