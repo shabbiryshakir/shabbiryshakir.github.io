@@ -29,6 +29,49 @@ interface UserProfile {
   github?: string; linkedin?: string; email?: string; whatsapp?: string; instagram?: string;
 }
 
+// Best-effort Instagram thumbnail. Tries to fetch og:image via a public
+// CORS proxy and falls back to the gradient + logo on any failure.
+function InstagramThumbnail({ url }: { url: string }) {
+  const [src, setSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const proxied = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+    fetch(proxied)
+      .then((r) => (r.ok ? r.text() : Promise.reject()))
+      .then((html) => {
+        if (cancelled) return;
+        const og =
+          html.match(/<meta\s+property="og:image"\s+content="([^"]+)"/i)?.[1] ||
+          html.match(/<meta\s+content="([^"]+)"\s+property="og:image"/i)?.[1] ||
+          html.match(/class="EmbeddedMediaImage"[^>]*src="([^"]+)"/i)?.[1];
+        if (og) setSrc(og.replace(/&amp;/g, "&"));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [url]);
+
+  if (src) {
+    return (
+      <img
+        src={src}
+        alt=""
+        draggable={false}
+        className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 select-none pointer-events-none"
+        onError={() => setSrc(null)}
+      />
+    );
+  }
+
+  return (
+    <div className="absolute inset-0 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center">
+      <i className="fab fa-instagram text-4xl text-white drop-shadow-lg"></i>
+    </div>
+  );
+}
+
 // --- 1. DYNAMIC LIVING WALLPAPER (VIBRANT 3D) ---
 function FloatingSkillNodes() {
   return (
@@ -820,6 +863,8 @@ export default function VisionOSPortfolio() {
                                            </>
                                         ) : displayImage ? (
                                            <img src={displayImage} className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100" />
+                                        ) : isInstagramItem && proj.link ? (
+                                           <InstagramThumbnail url={proj.link} />
                                         ) : isInstagramItem ? (
                                            <div className="absolute inset-0 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center">
                                              <i className="fab fa-instagram text-4xl text-white drop-shadow-lg"></i>
@@ -848,7 +893,7 @@ export default function VisionOSPortfolio() {
           </AnimatePresence>
         </div>
 
-        <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 md:gap-5 px-4 md:px-6 py-3 md:py-4 bg-[#1a1a1c]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] z-[100] pointer-events-auto shadow-2xl">
+        <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 md:gap-5 px-4 md:px-6 py-3 md:py-4 bg-[#1a1a1c]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] z-[30] pointer-events-auto shadow-2xl">
           {openWindows.map(app => {
             let dockIcon = app.data.icon || 'fa-folder';
             let dockIconPrefix: 'fas' | 'fab' = 'fas';
