@@ -46,6 +46,13 @@ export const project = {
       description: 'Upload a PDF directly. This will override the external link.'
     },
     {
+      name: 'uploadVideo',
+      title: 'Upload Video File (MP4)',
+      type: 'file',
+      options: { accept: 'video/*' },
+      description: 'Drag-drop a video to host it on Sanity. Best at 720p MP4 (H.264). Max 500MB on Sanity free plan. Overrides the YouTube link if both are filled.'
+    },
+    {
       name: 'uploadImage',
       title: 'Upload High-Res Image',
       type: 'image',
