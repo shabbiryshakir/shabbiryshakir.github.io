@@ -48,7 +48,7 @@ Put all the project's media in the folder plus a `project.json` (see `_example/`
 | `type` | `website` (iframe of `link`), `video` (YouTube `link`), `photo`, `pdf` |
 | `link` | live URL / YouTube URL |
 | `cover` | card image; defaults to a file named `cover.*` |
-| `main` | optional main image/PDF shown first |
+| `main` | optional main image / PDF / video (mp4) shown first — a video plays in the built-in player |
 | `gallery` | `[{file, caption}]` or `[{url, caption}]`. **Omit it** to auto-include every other image/video/PDF in the folder |
 | `external` | `true` = show a case-study card + "View Live" button instead of embedding (use for sites that block iframes) |
 | `showExternalLink`, `color` | optional |
@@ -70,6 +70,7 @@ Creating `content/projects/<same-slug>/` updates that project instead of making 
 - `scripts/sync-content.mjs` — the sync script.
 
 ## Workflow for a new session
+0. `git pull` first — the site is also edited from other machines/sessions.
 1. Drop files into `content/projects/<slug>/`, write `project.json` (or just tell Claude the details).
 2. `npm run sync -- --dry`, then `npm run sync`.
 3. Check `npm run dev` → http://localhost:3000.

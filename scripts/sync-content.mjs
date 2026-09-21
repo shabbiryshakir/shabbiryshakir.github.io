@@ -121,7 +121,7 @@ async function syncProject(slug) {
   if (cover) fields.coverImage = await upload(path.join(dir, cover));
   if (cfg.main) {
     const up = await upload(path.join(dir, cfg.main));
-    fields[up._type === 'image' ? 'uploadImage' : 'uploadFile'] = up;
+    fields[up._type === 'image' ? 'uploadImage' : /\.(mp4|mov|webm|m4v)$/i.test(cfg.main) ? 'uploadVideo' : 'uploadFile'] = up;
   }
 
   // gallery: explicit list, or every other media file in the folder
