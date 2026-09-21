@@ -1,0 +1,28 @@
+{
+  "name": "Shabbir Shakir",
+  "fullName": "M Shabbir Shk Yusuf Shakir",
+  "role": "Fasteners Trader · AI & Software Developer",
+  "location": "Dubai, UAE",
+  "company": "Fasteners Trading, Dubai",
+  "tagline": "Running a fasteners trading business in Dubai, and building AI-powered apps and software on the side.",
+  "ventures": [
+    {
+      "name": "Fasteners Trading",
+      "role": "Owner",
+      "description": "Supplying industrial fasteners (bolts, nuts, screws, anchors and more) to businesses across the UAE."
+    },
+    {
+      "name": "AI & Software Development",
+      "role": "Developer",
+      "description": "Designing and building web apps, portals and AI-powered tools, from school management systems to business automation."
+    }
+  ],
+  "qualifications": [
+    { "title": "Hadi Ashar – Farig (FJ)", "institution": "Al-Jamea-tus-Saifiyah" }
+  ],
+  "about": {
+    "slug": "about-myself",
+    "description": "I am Shabbir Shakir",
+    "info": "I am an alumnus of the esteemed Al-Jamea-tus-Saifiyah, where we were taught the virtue of Rasulullah (S.A.W.): “A person’s craft is their treasure.” That principle has guided me ever since.\n\nToday I live in Dubai, UAE, where I run a fasteners trading business and work as an AI and software developer, building web apps, portals and automation tools. I believe tools are only part of the process; the real value of any craft lies in the creativity and vision of the craftsman."
+  }
+}

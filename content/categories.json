@@ -1,0 +1,7 @@
+[
+  { "slug": "web-dev", "title": "Web Dev" },
+  { "slug": "videos", "title": "Videos" },
+  { "slug": "designs", "title": "Designs" },
+  { "slug": "photography", "title": "Photography" },
+  { "slug": "phs-portal", "title": "PHS Portal", "parent": "web-dev" }
+]

@@ -64,7 +64,18 @@ export const project = {
   type: 'boolean',
   initialValue: false,
   description: 'Turn this on if this is a real, usable website and you want to show a button to open it in a new browser tab.',
-}
+},
     
+    {
+      name: 'gallery',
+      title: 'Gallery (extra images, videos, PDFs, links)',
+      type: 'array',
+      of: [{ type: 'object', name: 'mediaItem', fields: [
+        { name: 'caption', title: 'Caption', type: 'string' },
+        { name: 'image', title: 'Image', type: 'image' },
+        { name: 'file', title: 'Video / PDF File', type: 'file' },
+        { name: 'url', title: 'Or External URL (YouTube, site…)', type: 'url' },
+      ] }]
+    },
   ]
 }

@@ -21,12 +21,17 @@ interface LifeNode {
   coverUrl?: string; contentImageUrl?: string; 
   parentId?: string; skillsList?: Skill[]; nested?: LifeNode[]; projectType?: string;
   fileUrl?: string; videoUrl?: string; showExternalLink?: boolean; isExternalMedia?: boolean;
+  gallery?: MediaItem[];
 }
+interface MediaItem { caption?: string; imageUrl?: string; fileUrl?: string; mimeType?: string; url?: string; }
+interface Venture { name: string; role?: string; description?: string; link?: string; }
+interface Qualification { title: string; institution?: string; year?: string; }
 interface AppWindow { id: string; title: string; data: LifeNode; }
 
 interface UserProfile {
   name: string; fullName?: string; role: string; location: string; company?: string; profileImage: string;
   github?: string; linkedin?: string; email?: string; whatsapp?: string; instagram?: string;
+  tagline?: string; ventures?: Venture[]; qualifications?: Qualification[];
 }
 
 // Best-effort Instagram thumbnail. Tries to fetch og:image via a public
@@ -174,7 +179,7 @@ const WidgetSystem = ({ profile, handleOpenSystem, className = "" }: any) => (
        </div>
        <div className="flex flex-col gap-1 bg-white/5 p-3 rounded-lg md:rounded-xl border border-white/10">
           <p className="text-[#FFBD2E] text-[8px] md:text-[9px] uppercase tracking-widest font-bold">Brain CPU Load</p>
-          <p className="text-white text-xs md:text-sm font-semibold tracking-wide leading-tight">99% (Apps Script)</p>
+          <p className="text-white text-xs md:text-sm font-semibold tracking-wide leading-tight">99% (AI Agents)</p>
        </div>
        <div className="flex flex-col gap-1 bg-white/5 p-3 rounded-lg md:rounded-xl border border-white/10">
           <p className="text-[#27C93F] text-[8px] md:text-[9px] uppercase tracking-widest font-bold">Coffee / Chai Level</p>
@@ -182,7 +187,7 @@ const WidgetSystem = ({ profile, handleOpenSystem, className = "" }: any) => (
        </div>
        <div className="flex flex-col gap-1 bg-white/5 p-3 rounded-lg md:rounded-xl border border-white/10">
           <p className="text-[#FF5F56] text-[8px] md:text-[9px] uppercase tracking-widest font-bold">Current Status</p>
-          <p className="text-white text-xs md:text-sm font-semibold tracking-wide leading-tight">Teacher by Day, Dev by Night</p>
+          <p className="text-white text-xs md:text-sm font-semibold tracking-wide leading-tight">Trader by Day, Dev by Night</p>
        </div>
     </div>
   </div>
@@ -242,8 +247,38 @@ function AboutMeApp({ data, profile }: { data: LifeNode, profile: UserProfile | 
       <div className="w-full md:w-[65%] p-8 md:p-10 flex flex-col gap-10 md:overflow-y-auto custom-scrollbar">
          <div>
             <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/40 mb-4 font-bold flex items-center gap-2"><i className="fas fa-fingerprint text-[#4da6ff]"></i> Identity Overview</h3>
-            <p className="text-sm md:text-base text-white/80 leading-relaxed font-light">{data.info || data.description || "System data not found in Sanity CMS."}</p>
+            {profile?.tagline && <p className="text-base md:text-lg text-white font-semibold mb-3">{profile.tagline}</p>}
+            <p className="text-sm md:text-base text-white/80 leading-relaxed font-light whitespace-pre-wrap">{data.info || data.description || "System data not found in Sanity CMS."}</p>
          </div>
+         {profile?.ventures && profile.ventures.length > 0 && (
+            <div>
+              <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/40 mb-4 font-bold flex items-center gap-2"><i className="fas fa-briefcase text-[#27C93F]"></i> Work & Ventures</h3>
+              <div className="flex flex-col gap-3">
+                {profile.ventures.map((v, idx) => (
+                  <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-4">
+                    <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                      <span className="text-sm font-bold text-white">{v.link ? <a href={v.link} target="_blank" rel="noopener noreferrer" className="hover:text-[#4da6ff]">{v.name}</a> : v.name}</span>
+                      {v.role && <span className="text-[10px] uppercase tracking-wider text-white/50">{v.role}</span>}
+                    </div>
+                    {v.description && <p className="text-xs md:text-sm text-white/70 mt-2 leading-relaxed font-light">{v.description}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+         )}
+         {profile?.qualifications && profile.qualifications.length > 0 && (
+            <div>
+              <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/40 mb-4 font-bold flex items-center gap-2"><i className="fas fa-graduation-cap text-[#a78bfa]"></i> Qualifications</h3>
+              <div className="flex flex-col gap-2">
+                {profile.qualifications.map((q, idx) => (
+                  <div key={idx} className="flex items-center justify-between gap-3 text-sm text-white/80 bg-white/5 px-4 py-3 rounded-lg border border-white/10">
+                    <span><span className="font-semibold text-white">{q.title}</span>{q.institution && <span className="text-white/50"> · {q.institution}</span>}</span>
+                    {q.year && <span className="text-[10px] text-white/40 font-bold">{q.year}</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+         )}
          {data.skillsList && data.skillsList.length > 0 && (
             <div>
               <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6 font-bold flex items-center gap-2"><i className="fas fa-microchip text-[#FFBD2E]"></i> Core Capabilities</h3>
@@ -265,7 +300,26 @@ function AboutMeApp({ data, profile }: { data: LifeNode, profile: UserProfile | 
   );
 }
 
+function GalleryMedia({ item, title }: { item: MediaItem; title: string }) {
+  const src = item.fileUrl || item.url || item.imageUrl || '';
+  const yt = src.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([^"&?\/\s]{11})/);
+  if (item.fileUrl && item.mimeType?.startsWith('video')) return <video src={item.fileUrl} controls autoPlay className="w-full h-full object-contain bg-black" />;
+  if (item.fileUrl) return <iframe src={`${item.fileUrl}#toolbar=0`} className="w-full h-full border-none bg-[#323639]" title={item.caption || title} />;
+  if (yt) return <iframe src={`https://www.youtube.com/embed/${yt[1]}?autoplay=1&rel=0`} className="w-full h-full border-none bg-black" allowFullScreen />;
+  if (item.url) return <iframe src={item.url} className="w-full h-full border-none" title={item.caption || title} sandbox="allow-scripts allow-same-origin allow-forms allow-popups" />;
+  return (
+    <div className="relative w-full h-full flex items-center justify-center p-4 md:p-8 bg-[#111111]">
+      <img src={item.imageUrl} draggable="false" className="w-full h-full object-contain rounded shadow-2xl select-none pointer-events-none" alt={item.caption || title} />
+      <div className="absolute inset-0 z-10 bg-transparent"></div>
+    </div>
+  );
+}
+
 function ProjectViewerApp({ data }: { data: LifeNode }) {
+  const gallery = data.gallery || [];
+  const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
+  const activeItem = galleryIndex !== null ? gallery[galleryIndex] : null;
+
   const getYouTubeEmbedUrl = (url: string | null) => {
     if (!url) return null;
     const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([^"&?\/\s]{11})/);
@@ -296,7 +350,9 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
       {/* --- MEDIA DISPLAY AREA --- */}
       <div className="flex-1 w-full relative overflow-hidden flex items-center justify-center">
         {/* 💡 THE SECURE EXTERNAL CASE STUDY UI */}
-        {data.isExternalMedia ? (
+        {activeItem ? (
+          <GalleryMedia item={activeItem} title={data.title} />
+        ) : data.isExternalMedia ? (
           <div className="flex-1 w-full h-full bg-[#0a0a0c] flex flex-col items-center justify-center p-6 md:p-10 text-center relative overflow-hidden">
              {finalImageUrl && (
                <>
@@ -390,6 +446,20 @@ function ProjectViewerApp({ data }: { data: LifeNode }) {
         )}
       </div>
 
+      {gallery.length > 0 && (
+        <div className="w-full bg-[#141416] border-t border-white/10 px-4 py-3 flex gap-3 overflow-x-auto custom-scrollbar shrink-0 z-20">
+          <button onClick={() => setGalleryIndex(null)} className={`shrink-0 w-20 h-14 rounded-lg border flex items-center justify-center text-[10px] uppercase tracking-wider font-bold ${galleryIndex === null ? 'border-white text-white' : 'border-white/10 text-white/50 hover:text-white'}`}>Main</button>
+          {gallery.map((g, idx) => {
+            const icon = g.fileUrl ? (g.mimeType?.startsWith('video') ? 'fa-play' : 'fa-file-pdf') : g.url ? 'fa-link' : 'fa-image';
+            return (
+              <button key={idx} onClick={() => setGalleryIndex(idx)} title={g.caption} className={`shrink-0 w-20 h-14 rounded-lg border overflow-hidden relative flex items-center justify-center bg-white/5 ${galleryIndex === idx ? 'border-white' : 'border-white/10 hover:border-white/40'}`}>
+                {g.imageUrl ? <img src={g.imageUrl} alt={g.caption || ''} className="w-full h-full object-cover" /> : <i className={`fas ${icon} text-white/60`}></i>}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       {/* 💡 UNIVERSAL DESCRIPTION BOTTOM BAR (Hides for websites, instagram & external media to save space) */}
       {(!isWeb && !isInstagram && !data.isExternalMedia) && (
         <div className="w-full bg-[#1a1a1c] border-t border-white/10 p-4 md:p-6 flex flex-col justify-center z-20 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
@@ -472,6 +542,7 @@ export default function VisionOSPortfolio() {
       const query = `{
         "profile": *[_type == "profile"][0]{
           name, fullName, role, location, company, github, linkedin, email, whatsapp, instagram,
+          tagline, ventures[]{name, role, description, link}, qualifications[]{title, institution, year},
           "profileImage": profileImage.asset->url
         },
         "categories": *[_type == "category"]{ title, description, info, color, icon, skillsList[]{skillName, percentage}, "id": slug.current, "parentId": parent->slug.current },
@@ -481,7 +552,8 @@ export default function VisionOSPortfolio() {
           "coverUrl": coalesce(coverImage.asset->url, uploadImage.asset->url, image.asset->url),
           "contentImageUrl": coalesce(uploadImage.asset->url, image.asset->url),
           "fileUrl": coalesce(uploadFile.asset->url, file.asset->url),
-          "videoUrl": uploadVideo.asset->url
+          "videoUrl": uploadVideo.asset->url,
+          "gallery": gallery[]{ caption, url, "imageUrl": image.asset->url, "fileUrl": file.asset->url, "mimeType": file.asset->mimeType }
         }
       }`;
       try {
@@ -497,7 +569,7 @@ export default function VisionOSPortfolio() {
             coverUrl: p.coverUrl, contentImageUrl: p.contentImageUrl,
             projectType: p.projectType, fileUrl: p.fileUrl, videoUrl: p.videoUrl,
             showExternalLink: p.showExternalLink,
-            isExternalMedia: p.isExternalMedia
+            isExternalMedia: p.isExternalMedia, gallery: p.gallery || []
           };
           if (p.categoryId && nodeMap.has(p.categoryId)) nodeMap.get(p.categoryId).nested.push(projNode);
         });
@@ -799,9 +871,9 @@ export default function VisionOSPortfolio() {
                              <div className="text-white/80 font-mono text-xs md:text-sm leading-relaxed whitespace-pre-line">
                                {`> ${window.data.info}
 > Connecting to PHS Intranet... SUCCESS.
-> Checking Barwani local grid... ALL SYSTEMS NOMINAL.
+> Checking Dubai local grid... ALL SYSTEMS NOMINAL.
 > Executing N8N Webhooks... 4 ACTIVE.
-> Apps Script quota check... WARNING: APPROACHING LIMIT.
+> AI token quota check... WARNING: APPROACHING LIMIT.
 > Initializing Lisan-ud-Dawat font protocols... LOADED.
 > Coffee levels... CRITICAL. REFILL REQUIRED.`}
                              </div>

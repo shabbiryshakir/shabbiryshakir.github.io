@@ -1,0 +1,17 @@
+{
+  "title": "My App Name",
+  "category": "web-dev",
+  "type": "website",
+  "description": "What it does, who it's for, what tech it uses.",
+  "link": "https://my-app.example.com",
+  "color": "#4da6ff",
+  "external": false,
+  "showExternalLink": true,
+  "cover": "cover.jpg",
+  "gallery": [
+    { "file": "demo.mp4", "caption": "Walkthrough" },
+    { "file": "screen1.png", "caption": "Dashboard" },
+    { "file": "brochure.pdf", "caption": "Brochure" },
+    { "url": "https://youtu.be/XXXXXXXXXXX", "caption": "YouTube demo" }
+  ]
+}
