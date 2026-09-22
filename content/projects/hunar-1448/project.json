@@ -1,0 +1,10 @@
+{
+  "title": "Hunar: Ashara 1448 Waaz Visualisation",
+  "category": "web-dev",
+  "type": "website",
+  "icon": "fa-solid fa-circle-nodes",
+  "color": "#b91c1c",
+  "link": "https://hunar1448.vercel.app",
+  "showExternalLink": true,
+  "description": "An interactive visualisation of Hunar (Skills), the topic of Ashara Mubārakah 1448H in London. The Majalis of the Waaz are arranged on a single wheel, one for each field: Clothing & Food, Info Tech, Architecture, Law & Medicine, Education, Business and Governance. Tap a number to step into that Majlis and explore its themes."
+}

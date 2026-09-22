@@ -1,0 +1,10 @@
+{
+  "title": "Digital CV",
+  "category": "designs",
+  "type": "pdf",
+  "icon": "fa-solid fa-id-card",
+  "color": "#a78bfa",
+  "main": "shabbir-shakir-cv.pdf",
+  "showExternalLink": true,
+  "description": "A one-page CV designed in the same style as this portfolio. It includes a QR code and tappable links, so it can be shared as a PDF and opened on any phone."
+}

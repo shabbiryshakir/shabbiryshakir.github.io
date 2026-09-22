@@ -547,7 +547,7 @@ export default function VisionOSPortfolio() {
         },
         "categories": *[_type == "category"]{ title, description, info, color, icon, skillsList[]{skillName, percentage}, "id": slug.current, "parentId": parent->slug.current },
         "projects": *[_type == "project"]{
-          title, description, projectType, link, color, showExternalLink, isExternalMedia,
+          title, description, projectType, link, color, icon, showExternalLink, isExternalMedia,
           "id": slug.current, "categoryId": category->slug.current,
           "coverUrl": coalesce(coverImage.asset->url, uploadImage.asset->url, image.asset->url),
           "contentImageUrl": coalesce(uploadImage.asset->url, image.asset->url),
@@ -565,7 +565,7 @@ export default function VisionOSPortfolio() {
         data.projects.forEach((p: any) => {
           const projNode = {
             id: p.id, title: p.title, description: p.description, info: p.description,
-            color: p.color || '#ffffff', type: 'project', link: p.link,
+            color: p.color || '#ffffff', icon: p.icon, type: 'project', link: p.link,
             coverUrl: p.coverUrl, contentImageUrl: p.contentImageUrl,
             projectType: p.projectType, fileUrl: p.fileUrl, videoUrl: p.videoUrl,
             showExternalLink: p.showExternalLink,
@@ -958,7 +958,7 @@ export default function VisionOSPortfolio() {
                                              <i className="fab fa-instagram text-4xl text-white drop-shadow-lg"></i>
                                            </div>
                                         ) : (
-                                           <i className="fas fa-file-code text-4xl text-white/60"></i>
+                                           <i className={`fas ${proj.icon || "fa-file-code"} text-4xl`} style={{ color: proj.color || "rgba(255,255,255,0.6)" }}></i>
                                         )}
                                       </div>
                                       <div className={`absolute -bottom-2 -right-2 w-8 h-8 md:w-7 md:h-7 ${BadgeColor} border-2 border-[#1a1a1c] rounded-full flex items-center justify-center shadow-lg z-20`}>

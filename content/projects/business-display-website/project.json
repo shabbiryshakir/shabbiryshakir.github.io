@@ -1,0 +1,10 @@
+{
+  "title": "Century Fasteners Website",
+  "category": "web-dev",
+  "type": "website",
+  "icon": "fa-solid fa-store",
+  "color": "#4da6ff",
+  "link": "https://centuryf.ae",
+  "showExternalLink": true,
+  "description": "The website for my company, Century Fasteners LLC. Products load from a central database and are organised by category, material and standard, so the catalogue stays current without touching the code. Visitors can browse, filter and send an inquiry directly from any product."
+}

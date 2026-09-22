@@ -77,3 +77,15 @@ Creating `content/projects/<same-slug>/` updates that project instead of making 
 4. Commit + push to `master`.
 
 Backups: `content/_backup/*.ndjson` (gitignored) — full dataset export from 2026-09-21 before this setup.
+
+## Digital CV
+Source: `content/cv/cv.html` (it includes `qr.svg`, which points to the portfolio). To regenerate after editing it:
+```
+C="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"; cd content/cv
+"$C" --headless=new --no-pdf-header-footer --virtual-time-budget=5000 --print-to-pdf=cv.pdf cv.html
+"$C" --headless=new --hide-scrollbars --force-device-scale-factor=2 --window-size=794,1123 --virtual-time-budget=5000 --screenshot=cv.png cv.html
+cp cv.pdf ../projects/digital-cv/shabbir-shakir-cv.pdf && sips -Z 1000 cv.png --out ../projects/digital-cv/cover.png
+npm run sync -- digital-cv
+```
+Projects also take an `icon` (FontAwesome class, e.g. `fa-solid fa-film`), shown when there's no cover image.
+Instagram posts: `type: "instagram"` + `link`. Google Drive videos: `type: "video"`, link ending in `/preview`.

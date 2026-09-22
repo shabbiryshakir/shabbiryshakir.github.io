@@ -115,6 +115,7 @@ async function syncProject(slug) {
     category: { _type: 'reference', _ref: catId || `category-${cfg.category}` },
   };
   if (cfg.link) fields.link = cfg.link;
+  if (cfg.icon) fields.icon = cfg.icon;
 
   const files = fs.readdirSync(dir).filter(f => IMAGE.test(f) || FILE.test(f)).sort();
   const cover = cfg.cover || files.find(f => /^cover\./i.test(f));

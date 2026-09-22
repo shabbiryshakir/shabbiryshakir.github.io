@@ -1,0 +1,10 @@
+{
+  "title": "School Digital Campus Portal",
+  "category": "web-dev",
+  "type": "website",
+  "icon": "fa-solid fa-school",
+  "color": "#27C93F",
+  "link": "https://school-portal-demo-iota.vercel.app",
+  "showExternalLink": true,
+  "description": "A complete school management portal with separate dashboards for parents, class teachers, subject teachers, heads of section and administrators. It covers attendance, student points and conduct, lesson plans, approvals and progress tracking. This public demo uses sample data: pick a role to explore it, no login needed."
+}

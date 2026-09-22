@@ -1,0 +1,10 @@
+{
+  "title": "Lisan ud-Dawat Exam Paper Generator",
+  "category": "web-dev",
+  "type": "website",
+  "icon": "fa-solid fa-file-pen",
+  "color": "#FFBD2E",
+  "link": "https://shabbiryshakir.github.io/lsd-exampaper-generator/",
+  "showExternalLink": true,
+  "description": "A tool that helps teachers build Lisan ud-Dawat exam papers in minutes. It supports MCQs, fill-in-the-blanks, short and long answers and translation sections, with full right-to-left layout and Dawat fonts. It generates the cover page, numbers the sections, totals the marks and exports a print-ready PDF, and it can shuffle questions to make different sets from a reusable question bank."
+}

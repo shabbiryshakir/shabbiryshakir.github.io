@@ -25,6 +25,7 @@ export const project = {
     { name: 'link', title: 'External Link / Video URL', type: 'url' },
     { name: 'coverImage', title: 'Cover Image (Used for 3D Cards)', type: 'image', options: { hotspot: true } },
     { name: 'color', title: 'Theme Color', type: 'string', initialValue: '#ffffff' },
+    { name: 'icon', title: 'FontAwesome Icon Class (e.g. fa-solid fa-film)', type: 'string' },
     { 
       name: 'category', 
       title: 'Which Sector does this belong to?', 

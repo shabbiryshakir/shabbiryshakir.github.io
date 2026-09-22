@@ -3,26 +3,55 @@
   "fullName": "M Shabbir Shk Yusuf Shakir",
   "role": "Fasteners Trader · AI & Software Developer",
   "location": "Dubai, UAE",
-  "company": "Fasteners Trading, Dubai",
-  "tagline": "Running a fasteners trading business in Dubai, and building AI-powered apps and software on the side.",
+  "company": "Century Fasteners LLC",
+  "tagline": "I run Century Fasteners in Dubai, and I build web apps, portals and AI-powered tools.",
   "ventures": [
     {
-      "name": "Fasteners Trading",
-      "role": "Owner",
-      "description": "Supplying industrial fasteners (bolts, nuts, screws, anchors and more) to businesses across the UAE."
+      "name": "Century Fasteners LLC",
+      "role": "Dubai, UAE",
+      "link": "https://centuryf.ae",
+      "description": "Stainless, brass, galvanised and mild steel fasteners stocked in Dubai: bolts, nuts, washers, screws, threaded rod and rivets to DIN standards, supplied to businesses across the UAE."
     },
     {
-      "name": "AI & Software Development",
+      "name": "Web, App & AI Development",
       "role": "Developer",
-      "description": "Designing and building web apps, portals and AI-powered tools, from school management systems to business automation."
+      "description": "School portals, business websites, internal tools and data visualisations, built with modern web technology and AI-assisted workflows."
     }
   ],
-  "qualifications": [
-    { "title": "Hadi Ashar – Farig (FJ)", "institution": "Al-Jamea-tus-Saifiyah" }
-  ],
+  "qualifications": [],
   "about": {
     "slug": "about-myself",
-    "description": "I am Shabbir Shakir",
-    "info": "I am an alumnus of the esteemed Al-Jamea-tus-Saifiyah, where we were taught the virtue of Rasulullah (S.A.W.): “A person’s craft is their treasure.” That principle has guided me ever since.\n\nToday I live in Dubai, UAE, where I run a fasteners trading business and work as an AI and software developer, building web apps, portals and automation tools. I believe tools are only part of the process; the real value of any craft lies in the creativity and vision of the craftsman."
+    "description": "Trader in Dubai · Developer · Creator",
+    "info": "I'm Shabbir Shakir, based in Dubai, UAE. I run Century Fasteners LLC, a fasteners trading company, and alongside the business I design and build web apps, school portals and AI-powered tools.\n\nBefore Dubai I spent several years in education, where I produced videos, designs and digital systems for a school, and that is where most of the work in these folders comes from. I studied at Al-Jamea-tus-Saifiyah, and one lesson from there has stayed with me: a person's craft is their treasure.",
+    "skills": [
+      [
+        "Web & App Development",
+        85
+      ],
+      [
+        "AI Tools & Automation",
+        80
+      ],
+      [
+        "Video Editing",
+        85
+      ],
+      [
+        "Graphic Design",
+        75
+      ],
+      [
+        "Motion Graphics",
+        60
+      ],
+      [
+        "Photography",
+        65
+      ],
+      [
+        "Business & Trading",
+        80
+      ]
+    ]
   }
 }
