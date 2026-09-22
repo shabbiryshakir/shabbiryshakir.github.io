@@ -4,7 +4,7 @@
   "role": "Fasteners Trader · AI & Software Developer",
   "location": "Dubai, UAE",
   "company": "Century Fasteners LLC",
-  "tagline": "I run Century Fasteners in Dubai, and I build web apps, portals and AI-powered tools.",
+  "tagline": "Fasteners trade in Dubai, with software, media and design alongside.",
   "ventures": [
     {
       "name": "Century Fasteners LLC",
@@ -14,15 +14,20 @@
     },
     {
       "name": "Web, App & AI Development",
-      "role": "Developer",
-      "description": "School portals, business websites, internal tools and data visualisations, built with modern web technology and AI-assisted workflows."
+      "role": "Independent",
+      "description": "School portals, business websites, internal tools and interactive visualisations."
+    },
+    {
+      "name": "Video, Design & Photography",
+      "role": "Creative",
+      "description": "Short films, trailers, social media reels, graphic design and photography."
     }
   ],
   "qualifications": [],
   "about": {
     "slug": "about-myself",
     "description": "Trader in Dubai · Developer · Creator",
-    "info": "I'm Shabbir Shakir, based in Dubai, UAE. I run Century Fasteners LLC, a fasteners trading company, and alongside the business I design and build web apps, school portals and AI-powered tools.\n\nBefore Dubai I spent several years in education, where I produced videos, designs and digital systems for a school, and that is where most of the work in these folders comes from. I studied at Al-Jamea-tus-Saifiyah, and one lesson from there has stayed with me: a person's craft is their treasure.",
+    "info": "Based in Dubai, UAE, running Century Fasteners LLC, a fasteners trading company, and building web apps, portals and AI-powered tools alongside it.\n\nOver the years the work has also included filmmaking, video editing, graphic design and photography, along with teaching, public speaking and coordinating school media. The folders here hold a selection of it.\n\n“A person’s craft is their treasure.”",
     "skills": [
       [
         "Web & App Development",
@@ -33,7 +38,11 @@
         80
       ],
       [
-        "Video Editing",
+        "Business & Trading",
+        80
+      ],
+      [
+        "Video Editing & Filmmaking",
         85
       ],
       [
@@ -49,9 +58,10 @@
         65
       ],
       [
-        "Business & Trading",
-        80
+        "Public Speaking & Communication",
+        85
       ]
     ]
-  }
+  },
+  "education": "Al-Jamea-tus-Saifiyah"
 }

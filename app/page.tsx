@@ -31,7 +31,7 @@ interface AppWindow { id: string; title: string; data: LifeNode; }
 interface UserProfile {
   name: string; fullName?: string; role: string; location: string; company?: string; profileImage: string;
   github?: string; linkedin?: string; email?: string; whatsapp?: string; instagram?: string;
-  tagline?: string; ventures?: Venture[]; qualifications?: Qualification[];
+  education?: string; tagline?: string; ventures?: Venture[]; qualifications?: Qualification[];
 }
 
 // Best-effort Instagram thumbnail. Tries to fetch og:image via a public
@@ -239,6 +239,11 @@ function AboutMeApp({ data, profile }: { data: LifeNode, profile: UserProfile | 
           {profile?.company && (
             <div className="flex items-center gap-3 text-xs text-white/70 bg-white/5 px-4 py-2 rounded-lg border border-white/10">
               <i className="fas fa-building text-[#27C93F] w-4 text-center"></i> {profile.company}
+            </div>
+          )}
+          {profile?.education && (
+            <div className="flex items-center gap-3 text-xs text-white/70 bg-white/5 px-4 py-2 rounded-lg border border-white/10">
+              <i className="fas fa-graduation-cap text-[#a78bfa] w-4 text-center"></i> {profile.education}
             </div>
           )}
         </div>
@@ -542,7 +547,7 @@ export default function VisionOSPortfolio() {
       const query = `{
         "profile": *[_type == "profile"][0]{
           name, fullName, role, location, company, github, linkedin, email, whatsapp, instagram,
-          tagline, ventures[]{name, role, description, link}, qualifications[]{title, institution, year},
+          education, tagline, ventures[]{name, role, description, link}, qualifications[]{title, institution, year},
           "profileImage": profileImage.asset->url
         },
         "categories": *[_type == "category"]{ title, description, info, color, icon, skillsList[]{skillName, percentage}, "id": slug.current, "parentId": parent->slug.current },

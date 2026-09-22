@@ -5,7 +5,7 @@
     "icon": "fa-solid fa-code",
     "color": "#4da6ff",
     "description": "Apps, portals and tools I've built",
-    "info": "I build web apps that solve a real problem for the people using them: school portals, exam-paper generators, a business website and interactive visualisations. Most are built with React / Next.js, deployed on Vercel, and developed with AI-assisted workflows. Some of my work is internal business software that can't be shared publicly, so only public demos are shown here.",
+    "info": "Web apps built to solve practical problems: school portals, an exam-paper generator, a business website and an interactive visualisation. Built with React / Next.js, deployed on Vercel, with AI-assisted development. Some work is internal business software and isn't shown publicly.",
     "skills": [
       [
         "React / Next.js",
@@ -35,7 +35,7 @@
     "icon": "fa-solid fa-film",
     "color": "#ff5f56",
     "description": "Films, trailers and school media",
-    "info": "Video is where I started as a creator. I've made short films, program trailers, event highlights and social media reels, and handled everything from shooting and editing to colour and motion graphics. The aim is always the same: make the audience feel what the moment felt like.",
+    "info": "Short films, program trailers, event highlights and social media reels, covering shooting, editing, colour and motion graphics. The aim is simple: let the audience feel the moment.",
     "skills": [
       [
         "Final Cut Pro",
@@ -62,7 +62,7 @@
     "icon": "fa-brands fa-instagram",
     "color": "#E1306C",
     "description": "Reels made for the school's Instagram",
-    "info": "Reels and posts I produced for the Panjataniyah Higher Secondary School Instagram page, covering events, activities, Hifz and student book reviews. Shot, edited and published as part of running the school's social media."
+    "info": "Reels made for the Panjataniyah Higher Secondary School Instagram page, covering events, activities, Hifz and student book reviews."
   },
   {
     "slug": "designs",
@@ -70,7 +70,7 @@
     "icon": "fa-solid fa-pen-nib",
     "color": "#a78bfa",
     "description": "Graphic and layout work",
-    "info": "Vector graphics, layouts and visual identity work. I design with clarity first: the layout should carry the information before the decoration does.",
+    "info": "Graphic and layout work, where clarity comes first and decoration second.",
     "skills": [
       [
         "Adobe Illustrator",
@@ -92,7 +92,7 @@
     "icon": "fa-solid fa-camera-retro",
     "color": "#27C93F",
     "description": "Moments I've captured",
-    "info": "Photography is a hobby for me, not a profession: outdoor trips, wildlife and small everyday scenes, edited in Lightroom.",
+    "info": "A hobby rather than a profession: trips, wildlife and small everyday scenes, edited in Lightroom.",
     "skills": [
       [
         "Lightroom",

@@ -8,6 +8,7 @@ export default {
     { name: 'role', title: 'Job Title / Role', type: 'string', initialValue: 'System Architect' },
     { name: 'location', title: 'Current Location', type: 'string', initialValue: 'Dubai, UAE' },
     { name: 'company', title: 'Company / Business', type: 'string' },
+    { name: 'education', title: 'Education (small line under company)', type: 'string' },
     { name: 'tagline', title: 'One-line Tagline (About Page)', type: 'string' },
     {
       name: 'ventures', title: 'Businesses / Work (About Page)', type: 'array',
