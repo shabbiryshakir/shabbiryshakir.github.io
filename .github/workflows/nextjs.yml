@@ -31,6 +31,17 @@ jobs:
         run: npm install --legacy-peer-deps
       - name: Build with Next.js
         run: npx next build
+      # Google sign-in helper for the LSD Paper Maker app (shabbiryshakir.github.io/lsd-exampaper-generator).
+      # Serving it from this address lets sign-in work inside installed apps on iPhone and Android.
+      - name: Add Firebase sign-in helper (/__/auth)
+        run: |
+          mkdir -p out/__/auth
+          base=https://imani-paper-generator.firebaseapp.com/__/auth
+          curl -fsSL "$base/handler" -o out/__/auth/handler.html
+          curl -fsSL "$base/handler.js" -o out/__/auth/handler.js
+          curl -fsSL "$base/experiments.js" -o out/__/auth/experiments.js
+          curl -fsSL "$base/iframe" -o out/__/auth/iframe.html
+          curl -fsSL "$base/iframe.js" -o out/__/auth/iframe.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
