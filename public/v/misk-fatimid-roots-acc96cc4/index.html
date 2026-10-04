@@ -14,7 +14,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0d0906">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" href="favicon-64.png">
 <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -208,22 +208,31 @@ ul{padding-left:18px}li{margin:4px 0}
 .tm .av{width:42px;height:42px;font-size:18px;flex:none}
 .tm b{font-size:14px}.tm em{display:block;font-style:normal;font-size:12px;color:var(--gold);margin:1px 0 6px}
 .tm p{font-size:12.5px;color:#ddd1b8;line-height:1.5}
+.logo{background:#0d0906 url(media/logo.jpg) center/150%!important;color:transparent!important}
+.pav{background:conic-gradient(var(--gold),#7a5a2a,var(--gold2),var(--gold))}
+.private{display:flex;gap:12px;margin:0 18px 16px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,#1a120a,#0d0906)}
+.private .pv-ic{font-size:18px;line-height:1.2}
+.private b{font-size:13px;color:var(--gold)}.private p{font-size:12px;color:#d8ccb2;line-height:1.5;margin-top:2px}
+.addc{flex-direction:column;gap:8px}.addc .row{display:flex;gap:8px}.addc small{font-size:11px;color:var(--muted);text-align:center}
+.addc #cmName{flex:none}
+.tm img{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none;border:1.5px solid var(--gold)}
+.bd-hero .pav{width:84px;height:84px}
 </style>
 </head>
 <body>
-<aside class="side l"><div class="big">Fatimid<br>Roots</div>From Cairo to Gujarat.<br>An Arabic reel by MISK Productions.<br><br>Private preview.</aside>
-<aside class="side r"><kbd>Space</kbd> play / pause<br><kbd>↓</kbd> our profile<br><kbd>I</kbd> the story<br><kbd>C</kbd> notes<br><kbd>M</kbd> sound</aside>
+<aside class="side l"><div class="big" id="sideTitle"></div><span id="sideSub"></span><br>A reel by MISK Productions.<br><br>Private client preview.</aside>
+<aside class="side r"><kbd>Space</kbd> play / pause<br>Hold <kbd>edge</kbd> 2x speed<br><kbd>↓</kbd> your profile<br><kbd>I</kbd> the story<br><kbd>C</kbd> notes<br><kbd>M</kbd> sound</aside>
 
 <div class="app" id="app">
   <div class="splash" id="splash">
     <div class="sp-brand">MISK</div><div class="sp-sub">PRODUCTIONS</div>
-    <div class="sp-title">Fatimid Roots</div>
-    <div class="sp-ar">الجذور الفاطمية</div>
+    <div class="sp-title" id="spTitle"></div>
+    <div class="sp-ar" id="spAr"></div>
     <div class="sp-line"></div>
-    <div class="sp-tx">A private first look at our new reel, shown exactly as your audience will see it. Sound on for the full experience.</div>
+    <div class="sp-tx">A private preview prepared exclusively for you, shown exactly as your audience will see it. Sound on for the full experience.</div>
     <button class="ring" id="go" aria-label="Play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></button>
     <div class="sp-st" id="spSt">Preparing your preview · 0%</div>
-    <div class="sp-hp">🎧 Best with sound</div>
+    <div class="sp-hp">🔒 Private link · 🎧 Best with sound</div>
   </div>
 
   <div class="topbar">
@@ -233,7 +242,7 @@ ul{padding-left:18px}li{margin:4px 0}
 
   <div class="feed" id="feed">
     <article class="reel" id="main">
-      <video id="mv" src="media/reel_v4.mp4" poster="media/poster_v4.jpg" playsinline loop preload="auto"></video><div class="shade"></div>
+      <video id="mv" playsinline loop preload="auto"></video><div class="shade"></div>
       <button class="mute" aria-label="Sound"><svg viewBox="0 0 24 24"></svg></button>
       <div class="pp"><svg viewBox="0 0 24 24"></svg></div><div class="speed">2x ▸▸</div>
       <div class="rail">
@@ -245,26 +254,26 @@ ul{padding-left:18px}li{margin:4px 0}
         <div class="disc"></div>
       </div>
       <div class="meta">
-        <div class="who"><div class="av">M</div>misk.productions<span class="follow">Follow</span></div>
-        <div class="cap"><b>Fatimid Roots</b> · from Cairo to Gujarat. Eight centuries in one minute. 🏮</div><div class="cap" style="margin-top:0"><span class="more">… more</span></div>
+        <div class="who"><div class="av logo"></div>misk.productions<span class="follow">Follow</span></div>
+        <div class="cap" id="reelCap"></div><div class="cap" style="margin-top:0"><span class="more">… more</span></div>
         <div class="audio">♫ MISK Productions · Original audio</div>
       </div>
       <div class="prog"><i></i></div>
-      
     </article>
 
     <section class="profile" id="profile">
       <div class="ph">
-        <div class="pav"><div>M</div></div>
-        <div class="stats"><div><b>1</b><span>reel</span></div><div><b>2</b><span>previews</span></div><div><b>8</b><span>chapters</span></div></div>
+        <div class="pav"><div class="logo"></div></div>
+        <div class="stats"><div><b>1</b><span>reel</span></div><div><b id="nPrev"></b><span>previews</span></div><div><b id="nCh"></b><span>chapters</span></div></div>
       </div>
-      <div class="bio"><b>MISK Productions</b><span class="cat">Film &amp; storytelling studio</span>Cinematic short films on heritage, faith and history.<br>Arabic · Made for the feed ✦</div>
-      <div class="pbtns"><button class="pri" id="pWatch">Watch the reel</button><button id="pStory">Our story</button></div>
+      <div class="bio"><b>MISK Productions</b><span class="cat">Video production &amp; content studio</span>Cinematic short-form stories, crafted for the screen they live on ✦</div>
+      <div class="pbtns"><button class="pri" id="pWatch">Watch the reel</button><button id="pStory">About MISK</button></div>
+      <div class="private"><div class="pv-ic">🔒</div><div><b>Your private space</b><p>This profile was created for you alone. Here you'll find your reel, the previews that shaped it and the thinking behind every decision. Every MISK client gets a space like this, from first preview to final delivery.</p></div></div>
       <div class="hls" id="hls"></div>
-      <div class="ptabs"><button class="on" data-g="g-reels">▦ Reels</button><button data-g="g-drafts">✎ Drafts &amp; previews</button></div>
+      <div class="ptabs"><button class="on" data-g="g-reels">▦ Reel</button><button data-g="g-drafts">✎ Previews</button></div>
       <div class="pgrid on" id="g-reels"></div>
       <div class="pgrid" id="g-drafts"></div>
-      <div class="pnote" id="pnote" style="display:none">These are working versions from our process. They show how the idea grew and are not final. The final reel is the one at the top.</div>
+      <div class="pnote" id="pnote" style="display:none">These are working versions from our process. They show how the idea grew and are not final. Your final reel is in the Reel tab.</div>
     </section>
   </div>
 
@@ -277,10 +286,11 @@ ul{padding-left:18px}li{margin:4px 0}
     <div class="prog"><i></i></div>
   </div>
 
-<div class="story" id="story"><div class="st-bg" id="stBg"></div><div class="st-bars" id="stBars"></div>
-<div class="st-head"><div class="av">M</div>misk.productions<small id="stName"></small><button id="stX" aria-label="Close">✕</button></div>
-<div class="st-tap l" id="stL"></div><div class="st-tap r" id="stR"></div>
-<div class="st-body" id="stBody"></div></div>
+  <div class="story" id="story"><div class="st-bg" id="stBg"></div><div class="st-bars" id="stBars"></div>
+    <div class="st-head"><div class="av logo"></div>misk.productions<small id="stName"></small><button id="stX" aria-label="Close">✕</button></div>
+    <div class="st-tap l" id="stL"></div><div class="st-tap r" id="stR"></div>
+    <div class="st-body" id="stBody"></div></div>
+
   <div class="scrim" id="scrim"></div>
 
   <section class="sheet" id="infoSheet">
@@ -288,52 +298,11 @@ ul{padding-left:18px}li{margin:4px 0}
     <div class="sh-h">The story behind the reel</div>
     <div class="tabs" id="infoTabs"><button data-p="idea" class="on">Idea</button><button data-p="beats">Chapters</button><button data-p="script">Narration</button><button data-p="craft">Approach</button><button data-p="journey">Journey</button></div>
     <div class="sh-b">
-      <div class="pane on" id="p-idea">
-        <h3>A light carried across the sea</h3>
-        <p>Eight centuries, one minute. We wanted anyone, anywhere, to feel how the Fatimid da'wat travelled from Cairo, across Yemen, to the shores of Gujarat, and how that light still lives in the Dawoodi Bohra community today.</p>
-        <h4>What guided us</h4>
-        <ul>
-          <li><b>One thread.</b> A single lantern carries the story from Cairo's arches to India's shore, so even a first-time viewer can follow the journey.</li>
-          <li><b>Respect first.</b> Every person and place is shown with dignity: calm framing, warm light and no spectacle.</li>
-          <li><b>For a worldwide audience.</b> Classical Arabic narration, gold captions and wording that welcomes everyone.</li>
-          <li><b>Made for the feed.</b> It hooks in the first second, has no dead air and closes calmly on the Dai al-Mutlaq.</li>
-        </ul>
-        <h4>Palette</h4>
-        <div class="pal"><i style="background:#070504"></i><i style="background:#3a2210"></i><i style="background:#7a1f16"></i><i style="background:#e3b869"></i><i style="background:#efe4cc"></i></div>
-        <p style="margin-top:8px;font-size:12px;color:var(--muted)">Night, cedar, Fatimid maroon, lamp gold and parchment.</p>
-      </div>
+      <div class="pane on" id="p-idea"></div>
       <div class="pane" id="p-beats"><div class="beats" id="beats"></div></div>
-      <div class="pane" id="p-script"><h3>Narration</h3><div class="ar">
-<span>الجذور الفاطمية.. من القاهرة إلى كجرات.</span>
-<span>في القرن الرابع الهجري، كانت القاهرة منارة الفكر والعلم في ظلّ الدولة الفاطمية.</span>
-<span>ومن هناك، خرج الدعاة إلى أطراف الأرض، يحملون نور الدعوة الإسماعيلية.</span>
-<span>عبر البحر إلى اليمن، ومن اليمن إلى الهند،</span>
-<span>حتى استقرت الدعوة في سواحل كجرات، وهناك بدأت قصة "البُهرة".</span>
-<span>وكلمة "بُهرة" تعني في اللغة الكجراتية: "التاجر"،</span>
-<span>فقد عُرفوا بمهارتهم في التجارة، والوفاء في المعاملات.</span>
-<span>لكنهم لم يكونوا تجار دنيا فقط، بل تجار قلوب.</span>
-<span>جعلوا من الأخلاق أساسًا، ومن النظام طريقًا،</span>
-<span>ومن الولاء لآل البيت عقيدةً وسلوكًا.</span>
-<span>وعلى مرّ القرون، تفرّعت الدعوة إلى فروعٍ عدّة، وبقي إرثها حيًّا جيلًا بعد جيل.</span>
-<span>واليوم، تزدهر جماعة البهرة الداوودية في أنحاء العالم، وقلبها في الهند،</span>
-<span>بقيادة الداعي الثالث والخمسين، سيدنا مفضّل سيف الدين.</span>
-<span>تابعونا.. لنكتشف معًا المزيد من التاريخ الفاطمي.</span>
-      </div></div>
-      <div class="pane" id="p-craft">
-        <h3>Our approach</h3>
-        <h4>Picture</h4><ul><li>A warm, filmic grade, like lamplight on old stone.</li><li>Transitions shaped like the keel arch of Fatimid architecture, so the design carries the history.</li><li>A gold "tree of light" shows the da'wat branching through time.</li></ul>
-        <h4>Sound</h4><ul><li>Measured classical Arabic narration that leaves room for each line to land.</li><li>A soft Arabic score that sits under the voice and never competes with it.</li></ul>
-        <h4>Words</h4><ul><li>Word-by-word gold Arabic captions, so the story works even with the sound off.</li></ul>
-      </div>
-      <div class="pane" id="p-journey">
-        <h3>How the idea grew</h3>
-        <div class="timeline">
-          <div class="tl"><b>The question</b><p>How do you tell eight centuries in sixty seconds without losing anyone?</p></div>
-          <div class="tl"><b>Preview 1 · the lantern</b><p>We found our thread: one light travelling from Cairo to the coast of India.</p></div>
-          <div class="tl"><b>Preview 2 · people and places</b><p>We gave the journey a human face: scholars, gatherings, prayer and community.</p></div>
-          <div class="tl"><b>The reel</b><p>Refined wording for a worldwide audience, a gentle Arabic score and a closing invitation to follow.</p></div>
-        </div>
-      </div>
+      <div class="pane" id="p-script"><h3>Narration</h3><div class="ar" id="narr"></div></div>
+      <div class="pane" id="p-craft"></div>
+      <div class="pane" id="p-journey"><h3>How the idea grew</h3><div class="timeline" id="tl"></div></div>
     </div>
   </section>
 
@@ -341,82 +310,92 @@ ul{padding-left:18px}li{margin:4px 0}
     <div class="grab"></div>
     <div class="sh-h">Notes</div>
     <div class="sh-b" id="cmList"></div>
-    <div class="addc"><input id="cmIn" placeholder="Add a note…" maxlength="300"><button id="cmPost">Post</button></div>
+    <div class="addc">
+      <input id="cmName" placeholder="Your name" maxlength="60" autocomplete="name">
+      <div class="row"><input id="cmIn" placeholder="Write a note to MISK…" maxlength="500"><button id="cmPost">Send</button></div>
+      <small>Your note opens in WhatsApp, ready to send to our team.</small>
+    </div>
   </section>
+
   <section class="sheet" id="brandSheet">
     <div class="grab"></div>
     <div class="sh-h">About MISK Productions</div>
     <div class="sh-b">
-      <div class="bd-hero"><div class="pav"><div>M</div></div>
-        <div class="st-kick">Video production &amp; content studio · Dubai · Mumbai</div>
+      <div class="bd-hero"><div class="pav"><div class="logo"></div></div>
+        <div class="st-kick">Video production &amp; content studio</div>
         <div class="bd-tag">Stories crafted for the screen they live on.</div></div>
-      <div class="bd-stats"><div><b>5</b><span>platforms</span></div><div><b>24</b><span>reels / week</span></div><div><b>52</b><span>posts / week</span></div><div><b>9:16</b><span>native</span></div></div>
       <h4>Who we are</h4>
-      <p>MISK Productions is a short-form video and content studio. We turn ideas into scroll-stopping stories: scripted, designed, edited and finished natively for every platform they appear on. Our focus is educational, heritage and faith-centred storytelling in Arabic, made with the care of film and the pace of social media.</p>
+      <p>MISK Productions is a short-form video and content studio. We turn ideas into stories people stop to watch: researched, scripted, designed, edited and finished natively for every platform they appear on. We bring the care of film to the pace of social media.</p>
       <h4>What we create</h4>
-      <div class="chips"><span>Short-form reels</span><span>Scripting in Arabic</span><span>Cinematic visuals</span><span>Editing &amp; colour</span><span>Sound design</span><span>Arabic subtitles</span><span>Carousels</span><span>Stories &amp; polls</span><span>X threads</span><span>Cross-platform scheduling</span></div>
+      <div class="chips"><span>Short-form reels</span><span>Scripting</span><span>Cinematic visuals</span><span>Editing &amp; colour</span><span>Sound</span><span>Arabic subtitles</span><span>Carousels</span><span>Stories</span><span>Posts &amp; threads</span></div>
       <h4>Where it lives</h4>
       <div class="chips"><span>YouTube Shorts</span><span>TikTok</span><span>Instagram</span><span>Facebook</span><span>X</span></div>
       <h4>How we work</h4>
-      <div class="steps"><div><b>Brief</b>Your topics and goals</div><div><b>Script</b>Written and approved first</div><div><b>Produce</b>Visuals, edit, sound, captions</div><div><b>Deliver</b>Batched and scheduled</div></div>
+      <div class="steps"><div><b>Brief</b>Your ideas and goals</div><div><b>Script</b>Shaped and approved first</div><div><b>Produce</b>Visuals, edit, sound, captions</div><div><b>Deliver</b>Ready for every platform</div></div>
+      <h4>Every client, a private space</h4>
+      <p>Each project gets its own private page like this one. You follow your reel from first preview to final cut, see the thinking behind it and send us notes directly.</p>
       <h4>The team</h4>
-      <div class="tm"><div class="av">S</div><div><b>M Shabbir Shk Yusuf Shakir</b><em>Production, technology &amp; design · Dubai</em><p>Graduate of Al-Jamea-tus-Saifiyah (11 years) with a BBA. Web, app and AI-automation developer, with experience in Instagram video marketing, graphic design and photography.</p></div></div>
-      <div class="tm"><div class="av">J</div><div><b>Juzer Merchant</b><em>Creative producer · Mumbai</em><p>MSc Science Media Production, Imperial College London. Has produced documentaries, corporate films, short films, cinematic trailers with motion graphics and event reels. Researcher at Blink Films and Creative Producer at Hexareel Studios.</p></div></div>
-      <p style="margin-top:16px;font-size:12.5px;color:var(--muted);text-align:center">Fatimid Roots is one example of how we work: research, story, craft and the platform, considered together.</p>
+      <div class="tm"><img src="media/team_shabbir.jpg" alt=""><div><b>M Shabbir Shk Yusuf Shakir</b><em>Production, technology &amp; design · Dubai</em><p>Leads production and design, and builds the technology behind every project.</p></div></div>
+      <div class="tm"><img src="media/team_juzer.jpg" alt=""><div><b>Juzer Merchant</b><em>Creative producer · Mumbai</em><p>A creative producer with a background in documentaries, short films and cinematic trailers. MSc Science Media Production, Imperial College London.</p></div></div>
     </div>
   </section>
   <div class="toast" id="toast"></div>
 </div>
 
+<script src="project.js"></script>
 <script>
-const DRAFTS=[
- {src:'media/reel_v3.mp4',poster:'media/poster_v3.jpg',title:'Preview 2 · People & places',cap:'<b>Preview 2</b>: our second exploration, giving the journey a human face. It is a working version, kept here to show how the reel took shape.'},
- {src:'media/reel_v2.mp4',poster:'media/poster_v2.jpg',title:'Preview 1 · The lantern',cap:'<b>Preview 1</b>: the first concept, where we found the thread of a single lantern carrying the light from Cairo to India.'}
-];
-const BEATS=[[2,'Opening','الجذور الفاطمية: a single lantern opens the story.'],[8,'Cairo','Al-Qahira, a beacon of knowledge under the Fatimids.'],[14,'The journey begins','The du\'at set out, carrying the light to the ends of the earth.'],[24,'Across the sea','From Egypt to Yemen, and on to the coast of India.'],[33,'Bohra','A name that means "trader" in Gujarati.'],[40,'Traders of hearts','Known for skill in trade and faithfulness in their dealings.'],[50,'A way of life','Morals as a foundation, order as a path, loyalty as belief.'],[60,'Today','A global community, its heart in India.']];
-const NOTES=[
- ['MISK Productions',1,'Welcome, and thank you for taking the time to watch. This is the final cut of Fatimid Roots, presented exactly as your audience will see it on the feed. Swipe up to visit our profile, where you will also find the key previews that shaped it.'],
- ['On the story',0,'The minute is built around a single image: a lantern carried from Cairo to the shores of India. It gives every viewer, whether familiar with this history or not, one clear thread to follow from the first second to the last.'],
- ['On the sound',0,'The narration leads, in measured classical Arabic. Beneath it sits a soft Arabic score, present enough to carry emotion and quiet enough to let every word land.'],
- ['On presentation',0,'Captions and key visuals sit clear of the platform interface, so nothing important is hidden behind buttons or captions on Instagram, TikTok or YouTube Shorts.'],
- ['Your thoughts',0,'We would value your feedback. Leave a note below with your name and we will take it into account in the final delivery.']
-];
-const $=s=>document.querySelector(s),feed=$('#feed'),mv=$('#mv'),vv=$('#vv');
-history.scrollRestoration='manual';feed.scrollTop=0;
-function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
-/* splash: wait for enough buffer */
-let ready=false;
+const P=window.PROJECT,$=s=>document.querySelector(s),feed=$('#feed'),mv=$('#mv'),vv=$('#vv');
+history.scrollRestoration='manual';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2200)}
+/* ── render content from project.js ── */
+$('#sideTitle').innerHTML=esc(P.title).replace(' ','<br>');$('#sideSub').textContent=P.subtitle+'.';
+$('#spTitle').textContent=P.title;$('#spAr').textContent=P.titleAr;
+mv.src=P.reel.src;mv.poster=P.reel.poster;$('#reelCap').innerHTML=P.reel.caption;
+$('#nPrev').textContent=P.previews.length;$('#nCh').textContent=P.chapters.length;
+$('#p-idea').innerHTML=`<h3>${P.idea.heading}</h3><p>${P.idea.lead}</p><h4>What guided us</h4><ul>${P.idea.points.map(([h,t])=>`<li><b>${h}.</b> ${t}</li>`).join('')}</ul><h4>Palette</h4><div class="pal"><i style="background:#070504"></i><i style="background:#3a2210"></i><i style="background:#7a1f16"></i><i style="background:#e3b869"></i><i style="background:#efe4cc"></i></div><p style="margin-top:8px;font-size:12px;color:var(--muted)">Night, cedar, Fatimid maroon, lamp gold and parchment.</p>`;
+const mmss=t=>Math.floor(t/60)+':'+String(t%60).padStart(2,'0');
+$('#beats').innerHTML=P.chapters.map(([t,h,d,img])=>`<div class="beat" data-t="${t}"><img src="${img}" alt="" loading="lazy"><div><b>${mmss(t)} · ${h}</b><small>${d}</small></div></div>`).join('');
+$('#narr').innerHTML=P.narration.map(l=>`<span>${esc(l)}</span>`).join('');
+$('#p-craft').innerHTML='<h3>Our approach</h3>'+P.approach.map(([h,ls])=>`<h4>${h}</h4><ul>${ls.map(l=>`<li>${l}</li>`).join('')}</ul>`).join('');
+$('#tl').innerHTML=P.journey.map(([h,t])=>`<div class="tl"><b>${h}</b><p>${t}</p></div>`).join('');
+/* ── splash: wait for enough buffer ── */
+let ready=false,started=false;
 function bufPct(){try{const b=mv.buffered;return b.length&&mv.duration?b.end(b.length-1)/mv.duration*100:0}catch(_){return 0}}
-function upd(){const p=Math.min(100,Math.round(bufPct()));$('#go').style.setProperty('--p',ready?100:p);
- if(!ready&&(p>=40||mv.readyState>=4)){ready=true;$('#go').classList.add('ready');$('#go').style.setProperty('--p',100)}
- $('#spSt').textContent=ready?'Ready · tap to watch':'Preparing your preview · '+p+'%'}
+function upd(){const p=Math.min(100,Math.round(bufPct()));if(!ready&&(p>=40||mv.readyState>=4)){ready=true;$('#go').classList.add('ready')}
+ $('#go').style.setProperty('--p',ready?100:p);$('#spSt').textContent=ready?'Ready · tap to watch':'Preparing your preview · '+p+'%'}
 ['progress','loadedmetadata','canplaythrough','canplay'].forEach(ev=>mv.addEventListener(ev,upd));
 const pi=setInterval(()=>{upd();if(ready)clearInterval(pi)},300);
-let started=false;
-$('#go').onclick=()=>{started=true;mv.muted=false;setMute();mv.currentTime=0;mv.play().catch(()=>{});$('#splash').classList.add('gone');setTimeout(()=>toast('Swipe up to visit our profile'),7000)};
-/* sound */
+$('#go').onclick=()=>{started=true;mv.muted=false;setMute();mv.currentTime=0;mv.play().catch(()=>{});$('#splash').classList.add('gone');feed.scrollTop=0;setTimeout(()=>{if(!openId&&feed.scrollTop<10&&!$('#story').classList.contains('on')&&!$('#viewer').classList.contains('on'))toast('Swipe up to visit your profile')},7000)};
 function setMute(){$('#main .mute svg').innerHTML=mv.muted?'<path d="M3 9v6h4l5 4V5L7 9zm13.6 3 2.7-2.7-1.1-1.1-2.7 2.7-2.7-2.7-1.1 1.1 2.7 2.7-2.7 2.7 1.1 1.1 2.7-2.7 2.7 2.7 1.1-1.1z"/>':'<path d="M3 9v6h4l5 4V5L7 9zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/>'}
-setMute();
-$('#main .mute').onclick=()=>{mv.muted=!mv.muted;setMute()};
-/* play/pause + double-tap like */
+setMute();$('#main .mute').onclick=()=>{mv.muted=!mv.muted;setMute()};
+/* ── playback controls ── */
 function flash(root,play){const p=root.querySelector('.pp');p.querySelector('svg').innerHTML=play?'<path d="M8 5v14l11-7z"/>':'<path d="M7 5h3.5v14H7zm6.5 0H17v14h-3.5z"/>';p.classList.add('show');if(play)setTimeout(()=>p.classList.remove('show'),500)}
 function toggleV(v,root){if(v.paused){v.play();flash(root,true)}else{v.pause();flash(root,false)}}
-function wireProg(root,v){const bar=root.querySelector('.prog i');v.addEventListener('timeupdate',()=>bar.style.width=(v.currentTime/v.duration*100)+'%');root.querySelector('.prog').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();v.currentTime=(e.clientX-r.left)/r.width*v.duration}}
-wireProg($('#main'),mv);wireProg($('#viewer'),vv);
-const heart='<path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.3 3.1 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.7 0 5.9 3.8 4.4 7.3C19.5 16.4 12 21 12 21z"/>';
-let last=0,tm;const main=$('#main');
-main.addEventListener('click',e=>{if(e.target.closest('.rail,.mute,.meta,.prog'))return;const now=Date.now();
- if(now-last<280){clearTimeout(tm);main.querySelector('.like').classList.add('liked');const h=document.createElementNS('http://www.w3.org/2000/svg','svg');h.setAttribute('viewBox','0 0 24 24');h.classList.add('heart-pop');h.innerHTML=heart;const r=main.getBoundingClientRect();h.style.left=(e.clientX-r.left)+'px';h.style.top=(e.clientY-r.top)+'px';main.appendChild(h);setTimeout(()=>h.remove(),800)}
- else tm=setTimeout(()=>toggleV(mv,main),280);last=now});
+function wireProg(root,v){const bar=root.querySelector('.prog i');v.addEventListener('timeupdate',()=>{if(v.duration)bar.style.width=(v.currentTime/v.duration*100)+'%'});root.querySelector('.prog').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();v.currentTime=(e.clientX-r.left)/r.width*v.duration}}
+const UI='.rail,.mute,.meta,.prog,.wipbar,.vcap';
+/* Instagram-style: tap = pause/play, double-tap = like, hold left/right edge = 2x from the current moment */
+function wireGestures(root,v,onDouble){let last=0,tm=null,hold=null,fast=false,t0=0;const s=root.querySelector('.speed');
+ root.addEventListener('pointerdown',e=>{if(e.target.closest(UI))return;const r=root.getBoundingClientRect(),x=(e.clientX-r.left)/r.width;if(x>.3&&x<.7)return;
+  t0=v.currentTime;hold=setTimeout(()=>{fast=true;if(Math.abs(v.currentTime-t0)>1.5)v.currentTime=t0;v.playbackRate=2;if(v.paused)v.play();s.classList.add('on')},300)});
+ const end=()=>{clearTimeout(hold);hold=null;if(fast){const keep=v.currentTime;v.playbackRate=1;if(keep<t0-1)v.currentTime=t0;s.classList.remove('on');root._skipClick=Date.now()}fast=false};
+ ['pointerup','pointercancel','pointerleave'].forEach(ev=>root.addEventListener(ev,end));
+ root.addEventListener('contextmenu',e=>e.preventDefault());
+ root.addEventListener('selectstart',e=>e.preventDefault());
+ root.addEventListener('click',e=>{if(e.target.closest(UI))return;if(root._skipClick&&Date.now()-root._skipClick<400)return;const now=Date.now();
+  if(onDouble&&now-last<280){clearTimeout(tm);onDouble(e)}else tm=setTimeout(()=>toggleV(v,root),onDouble?280:0);last=now})}
+const main=$('#main'),heart='<path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.3 3.1 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.7 0 5.9 3.8 4.4 7.3C19.5 16.4 12 21 12 21z"/>';
+wireProg(main,mv);wireProg($('#viewer'),vv);
+wireGestures(main,mv,e=>{main.querySelector('.like').classList.add('liked');const h=document.createElementNS('http://www.w3.org/2000/svg','svg');h.setAttribute('viewBox','0 0 24 24');h.classList.add('heart-pop');h.innerHTML=heart;const r=main.getBoundingClientRect();h.style.left=(e.clientX-r.left)+'px';h.style.top=(e.clientY-r.top)+'px';main.appendChild(h);setTimeout(()=>h.remove(),800)});
+wireGestures($('#viewer'),vv,null);
 main.querySelector('.like').onclick=e=>e.currentTarget.classList.toggle('liked');
 main.querySelector('.sv').onclick=e=>{const b=e.currentTarget;b.classList.toggle('liked');toast(b.classList.contains('liked')?'Saved':'Removed')};
 main.querySelector('.share').onclick=async()=>{try{if(navigator.share)await navigator.share({title:document.title,url:location.href});else{await navigator.clipboard.writeText(location.href);toast('Link copied')}}catch(_){}};
 main.querySelector('.follow').onclick=e=>{const f=e.currentTarget;f.textContent=f.textContent==='Follow'?'Following':'Follow'};
-/* pause main when on profile */
-new IntersectionObserver(es=>es.forEach(e=>{if(!started)return;if(e.isIntersecting&&e.intersectionRatio>.6){if($('#viewer').classList.contains('on'))return;mv.play().catch(()=>{})}else mv.pause()}),{root:feed,threshold:[.6]}).observe(main);
+new IntersectionObserver(es=>es.forEach(e=>{if(!started)return;if(e.isIntersecting&&e.intersectionRatio>.6){if($('#viewer').classList.contains('on')||$('#story').classList.contains('on'))return;mv.play().catch(()=>{})}else mv.pause()}),{root:feed,threshold:[.6]}).observe(main);
 const toMain=()=>feed.scrollTo({top:0,behavior:'smooth'}),toProf=()=>feed.scrollTo({top:feed.clientHeight,behavior:'smooth'});
 $('#toProfile').onclick=toProf;$('#pWatch').onclick=toMain;
-/* sheets */
+/* ── sheets ── */
 let openId=null;
 function open(id){close();openId=id;$('#'+id).classList.add('on');$('#scrim').classList.add('on')}
 function close(){if(!openId)return;$('#'+openId).classList.remove('on');$('#scrim').classList.remove('on');openId=null}
@@ -428,94 +407,62 @@ document.querySelectorAll('.sheet').forEach(s=>{let y0=null;
  s.addEventListener('touchend',e=>{if(y0!==null){const d=e.changedTouches[0].clientY-y0;s.style.transform='';if(d>80)close();y0=null}});
  s.querySelector('.grab').onclick=close;s.querySelector('.sh-h').onclick=close});
 document.querySelectorAll('#infoTabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#infoTabs button,.pane').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#p-'+b.dataset.p).classList.add('on')});
-$('#beats').innerHTML=BEATS.map(([t,h,d])=>`<div class="beat" data-t="${t}"><img src="media/f_${t}.jpg" alt=""><div><b>0:${String(t).padStart(2,'0')} · ${h}</b><small>${d}</small></div></div>`).join('');
 function seek(t){close();toMain();setTimeout(()=>{mv.currentTime=t;mv.play()},450)}
 document.querySelectorAll('.beat').forEach(b=>b.onclick=()=>seek(+b.dataset.t));
-/* notes */
-const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const WA_NUMBER='971509853309'; // MISK WhatsApp in international format, digits only
+/* ── notes → WhatsApp ── */
 function getMine(){try{return JSON.parse(localStorage.getItem('misk_notes')||'[]')}catch(_){return[]}}
-function renderNotes(){$('#cmList').innerHTML=NOTES.map(([n,p,t])=>`<div class="cm"><div class="av">M</div><div>${p?'<div class="pin">📌 PINNED</div>':''}<div class="n">${n}<span>misk.productions</span></div><p>${t}</p></div></div>`).join('')+getMine().map(m=>`<div class="cm"><div class="av">${esc((m.n||'Y')[0].toUpperCase())}</div><div><div class="n">${esc(m.n||'You')}<span>sent to MISK</span></div><p>${esc(m.t||m)}</p></div></div>`).join('')}
+function renderNotes(){$('#cmList').innerHTML=P.notes.map(([n,pin,t])=>`<div class="cm"><div class="av logo"></div><div>${pin?'<div class="pin">📌 PINNED</div>':''}<div class="n">${n}<span>misk.productions</span></div><p>${t}</p></div></div>`).join('')+getMine().map(m=>`<div class="cm"><div class="av">${esc((m.n||'Y')[0].toUpperCase())}</div><div><div class="n">${esc(m.n||'You')}<span>sent via WhatsApp</span></div><p>${esc(m.t||'')}</p></div></div>`).join('')}
 renderNotes();
-$('#cmIn').placeholder='Write a note to MISK…';$('#cmPost').textContent='Send';
+try{$('#cmName').value=localStorage.getItem('misk_name')||''}catch(_){}
 $('#cmIn').addEventListener('keydown',e=>{if(e.key==='Enter')$('#cmPost').click()});
-$('#cmPost').onclick=()=>{const v=$('#cmIn').value.trim();if(!v)return;let n='';try{n=localStorage.getItem('misk_name')||''}catch(_){}
- if(!n){n=(prompt('Your name, so we know who the note is from:')||'').trim();if(!n)return;try{localStorage.setItem('misk_name',n)}catch(_){}}
- const m=getMine();m.push({n,t:v});try{localStorage.setItem('misk_notes',JSON.stringify(m))}catch(_){}
- $('#cmIn').value='';renderNotes();
- const msg=`Fatimid Roots: note from ${n}\n\n${v}`;window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');toast('Opening WhatsApp to send your note')};
-/* profile */
+$('#cmPost').onclick=()=>{const n=$('#cmName').value.trim(),v=$('#cmIn').value.trim();
+ if(!n){$('#cmName').focus();toast('Please add your name first');return}if(!v){$('#cmIn').focus();return}
+ const url=`https://wa.me/${P.whatsapp}?text=${encodeURIComponent(`${P.title}: note from ${n}\n\n${v}`)}`;
+ const w=window.open(url,'_blank');if(!w)location.href=url;
+ try{localStorage.setItem('misk_name',n);const m=getMine();m.push({n,t:v});localStorage.setItem('misk_notes',JSON.stringify(m))}catch(_){}
+ $('#cmIn').value='';renderNotes();toast('Opening WhatsApp: tap send to deliver your note');if(window.track)track('note-sent')};
+/* ── profile ── */
+$('#g-reels').innerHTML=`<div class="pt" id="ptMain"><img src="${P.reel.poster}" alt=""><span class="lbl">▶ ${esc(P.title)}</span></div>`;
+$('#ptMain').onclick=toMain;
+$('#g-drafts').innerHTML=P.previews.map((d,i)=>`<div class="pt draft" data-i="${i}"><img src="${d.poster}" alt=""><div class="wip">WORKING VERSION</div><span class="lbl">${d.name}</span></div>`).join('');
+document.querySelectorAll('.ptabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.ptabs button,.pgrid').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#'+b.dataset.g).classList.add('on');$('#pnote').style.display=b.dataset.g==='g-drafts'?'block':'none'});
+document.querySelectorAll('.pt.draft').forEach(t=>t.onclick=()=>{const d=P.previews[+t.dataset.i];mv.pause();vv.src=d.src;vv.poster=d.poster;vv.muted=false;$('#vTitle').textContent=`${d.name} · ${d.title} · not the final reel`;$('#vCap').innerHTML=`<b>${d.name}</b>: ${d.text}`;$('#viewer').classList.add('on');vv.play().catch(()=>{});if(window.track)track(d.name.toLowerCase().replace(' ','-')+'-opened')});
+function closeViewer(){vv.pause();vv.removeAttribute('src');vv.load();$('#viewer').classList.remove('on')}
+$('#vClose').onclick=closeViewer;
+/* ── story highlights ── */
 const PAL='<div class="st-pal"><i style="background:#070504"></i><i style="background:#3a2210"></i><i style="background:#7a1f16"></i><i style="background:#e3b869"></i><i style="background:#efe4cc"></i></div>';
-const HL=[
- {n:'The idea',c:'media/f_2.jpg',s:[
-  ['media/f_2.jpg','The idea','Eight centuries.<br>One minute.','How do you carry a thousand years of history to someone scrolling a feed? You give them one thing to follow.'],
-  ['media/f_14.jpg','The idea','One light, one journey','A single lantern travels from the arches of Cairo, across the sea, to the shores of India. Wherever it goes, the story goes.'],
-  ['media/f_24.jpg','The idea','For anyone, anywhere','Whether you know this history or are meeting it for the first time, the journey should feel clear, warm and true.']]},
- {n:'The look',c:'media/f_33.jpg',s:[
-  ['media/f_33.jpg','The look','Lamplight on old stone','A warm, filmic grade. Gold highlights, deep shadows and soft grain, as if the story were lit by the lantern itself.'],
-  ['media/f_8.jpg','The look','Shaped by Fatimid arches','Transitions take the form of the keel arch, the signature of Fatimid architecture, so the design carries the history.'],
-  ['media/f_33.jpg','The look','Our palette','Night, cedar, Fatimid maroon, lamp gold and parchment.'+PAL]]},
- {n:'The sound',c:'media/f_40.jpg',s:[
-  ['media/f_40.jpg','The sound','The voice leads','Measured classical Arabic narration, with room to breathe between lines so each one lands.'],
-  ['media/f_14.jpg','The sound','A score like a breath','A soft Arabic score sits beneath the voice. You feel it more than you hear it.']]},
- {n:'The words',c:'media/f_24.jpg',s:[
-  ['media/f_24.jpg','The words','Gold, word by word','Arabic captions appear in lamp gold as they are spoken, so the story works even with the sound off.'],
-  ['media/f_33.jpg','The words','Traders of hearts','"لكنهم لم يكونوا تجار دنيا فقط، بل تجار قلوب": the line the whole reel turns on.']]},
- {n:'The journey',c:'media/poster_v4.jpg',s:[
-  ['media/poster_v2.jpg','Preview 1','Finding the thread','Our first exploration, where the lantern became the heart of the story.'],
-  ['media/poster_v3.jpg','Preview 2','Giving it a face','We brought in people and places: learning, prayer, gathering and community.'],
-  ['media/poster_v4.jpg','The reel','Fatimid Roots','Everything we learned, refined into one minute.<br><button class="st-cta" id="stWatch">▶ Watch the reel</button>']]}
-];
-const seen=new Set();
-$('#hls').innerHTML=HL.map((x,i)=>`<div class="hl" data-i="${i}"><i><img src="${x.c}" alt=""></i>${x.n}</div>`).join('');
-let sH=0,sI=0,sT=null,sStart=0,DUR=5500,sRaf;
-function sShow(){const x=HL[sH],s=x.s[sI];seen.add(sH);document.querySelector(`.hl[data-i="${sH}"]`).classList.add('seen');
- $('#stName').textContent='· '+x.n;$('#stBg').style.backgroundImage=`url(${s[0]})`;
- $('#stBody').innerHTML=`<div class="st-kick">${s[1]}</div><div class="st-t">${s[2]}</div><div class="st-p">${s[3]}</div>`;
+const HL=P.highlights;
+$('#hls').innerHTML=HL.map((x,i)=>`<div class="hl" data-i="${i}"><i><img src="${x.cover}" alt=""></i>${x.name}</div>`).join('');
+let sH=0,sI=0,sStart=0,sRaf,DUR=5500;
+function sShow(){const x=HL[sH],s=x.slides[sI];document.querySelector(`.hl[data-i="${sH}"]`).classList.add('seen');
+ $('#stName').textContent='· '+x.name;$('#stBg').style.backgroundImage=`url(${s[0]})`;
+ $('#stBody').innerHTML=`<div class="st-kick">${s[1]}</div><div class="st-t">${s[2]}</div><div class="st-p">${s[3].replace('%PAL%',PAL).replace('%WATCH%','<br><button class="st-cta" id="stWatch">▶ Watch the reel</button>')}</div>`;
  const w=$('#stWatch');if(w)w.onclick=e=>{e.stopPropagation();stClose();toMain();setTimeout(()=>{mv.currentTime=0;mv.play()},400)};
- $('#stBars').innerHTML=x.s.map((_,j)=>`<i><b style="width:${j<sI?100:0}%"></b></i>`).join('');
+ $('#stBars').innerHTML=x.slides.map((_,j)=>`<i><b style="width:${j<sI?100:0}%"></b></i>`).join('');
  sStart=performance.now();cancelAnimationFrame(sRaf);const bar=$('#stBars').children[sI].firstChild;
  const tick=t=>{const p=Math.min(1,(t-sStart)/DUR);bar.style.width=p*100+'%';if(p>=1)sNext();else sRaf=requestAnimationFrame(tick)};sRaf=requestAnimationFrame(tick)}
-function sNext(){if(sI<HL[sH].s.length-1)sI++;else if(sH<HL.length-1){sH++;sI=0}else return stClose();sShow()}
-function sPrev(){if(sI>0)sI--;else if(sH>0){sH--;sI=0}else sStart=performance.now();sShow()}
+function sNext(){if(sI<HL[sH].slides.length-1)sI++;else if(sH<HL.length-1){sH++;sI=0}else return stClose();sShow()}
+function sPrev(){if(sI>0)sI--;else if(sH>0){sH--;sI=0}sShow()}
 function stOpen(i){sH=i;sI=0;mv.pause();$('#story').classList.add('on');sShow()}
 function stClose(){cancelAnimationFrame(sRaf);$('#story').classList.remove('on')}
 document.querySelectorAll('.hl').forEach(h=>h.onclick=()=>stOpen(+h.dataset.i));
 $('#stX').onclick=stClose;$('#stR').onclick=sNext;$('#stL').onclick=sPrev;
-$('#g-reels').innerHTML=`<div class="pt" id="ptMain"><img src="media/poster_v4.jpg" alt=""><span class="lbl">▶ Fatimid Roots</span></div>`;
-$('#ptMain').onclick=toMain;
-$('#g-drafts').innerHTML=DRAFTS.map((d,i)=>`<div class="pt draft" data-i="${i}"><img src="${d.poster}" alt=""><div class="wip">WORKING VERSION</div><span class="lbl">${d.title.split(' · ')[0]}</span></div>`).join('');
-document.querySelectorAll('.ptabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.ptabs button,.pgrid').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#'+b.dataset.g).classList.add('on');$('#pnote').style.display=b.dataset.g==='g-drafts'?'block':'none'});
-document.querySelectorAll('.pt.draft').forEach(t=>t.onclick=()=>{const d=DRAFTS[+t.dataset.i];mv.pause();vv.src=d.src;vv.poster=d.poster;vv.muted=false;$('#vTitle').textContent=d.title+' · not the final reel';$('#vCap').innerHTML=d.cap;$('#viewer').classList.add('on');vv.play().catch(()=>{})});
-function closeViewer(){vv.pause();vv.removeAttribute('src');vv.load();$('#viewer').classList.remove('on')}
-$('#vClose').onclick=closeViewer;
-$('#viewer').addEventListener('click',e=>{if(e.target.closest('.wipbar,.prog'))return;toggleV(vv,$('#viewer'))});
+/* ── keyboard ── */
 document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;const k=e.key.toLowerCase();
  if(k===' '){e.preventDefault();if(!started)return $('#go').click();$('#viewer').classList.contains('on')?toggleV(vv,$('#viewer')):toggleV(mv,main)}
  else if(k==='arrowdown')toProf();else if(k==='arrowup')toMain();else if(k==='i')open('infoSheet');else if(k==='c')open('cmSheet');else if(k==='m'){mv.muted=!mv.muted;setMute()}else if(k==='escape'){close();closeViewer();stClose()}});
-
-/* hold left/right edge = 2x, like Instagram */
-function wireSpeed(root,v){let t=null,fast=false;const s=root.querySelector('.speed');
- root.addEventListener('pointerdown',e=>{if(e.target.closest('.rail,.mute,.meta,.prog,.wipbar'))return;const r=root.getBoundingClientRect(),x=(e.clientX-r.left)/r.width;if(x>.28&&x<.72)return;
-  t=setTimeout(()=>{fast=true;v.playbackRate=2;if(v.paused)v.play();s.classList.add('on')},280)});
- const end=()=>{clearTimeout(t);if(fast){v.playbackRate=1;s.classList.remove('on');root._skip=true;setTimeout(()=>root._skip=false,50)}fast=false};
- ['pointerup','pointercancel','pointerleave'].forEach(ev=>root.addEventListener(ev,end));
- root.addEventListener('contextmenu',e=>e.preventDefault());
- root.addEventListener('click',e=>{if(root._skip){e.stopImmediatePropagation();root._skip=false}},true)}
-wireSpeed($('#main'),mv);wireSpeed($('#viewer'),vv);
 </script>
 <script>
-/* analytics: GoatCounter (views, country, device, referrer) + a few events */
+/* analytics: GoatCounter (visits, country, device, referrer) + key events */
 function track(name){try{window.goatcounter&&window.goatcounter.count&&window.goatcounter.count({path:'misk/'+name,title:name,event:true})}catch(_){}}
 (function(){const once=new Set(),t1=n=>{if(!once.has(n)){once.add(n);track(n)}};
  document.getElementById('go').addEventListener('click',()=>t1('reel-started'));
  const mv=document.getElementById('mv');mv.addEventListener('timeupdate',()=>{const p=mv.currentTime/mv.duration;if(p>.5)t1('reel-watched-50pct');if(p>.95)t1('reel-watched-full')});
- document.getElementById('toProfile').addEventListener('click',()=>t1('profile-opened'));
  document.getElementById('feed').addEventListener('scroll',e=>{if(e.target.scrollTop>e.target.clientHeight*.6)t1('profile-opened')},{passive:true});
- document.getElementById('pStory').addEventListener('click',()=>t1('brand-story-opened'));
- document.addEventListener('click',e=>{const d=e.target.closest('.pt.draft');if(d)t1('preview-'+(+d.dataset.i===0?'2':'1')+'-opened');const hl=e.target.closest('.hl');if(hl)t1('highlight-'+hl.textContent.trim().toLowerCase().replace(/\s+/g,'-'));if(e.target.closest('#cmPost'))track('note-sent');if(e.target.closest('.share'))t1('share-tapped')},true);
+ document.getElementById('pStory').addEventListener('click',()=>t1('about-misk-opened'));
+ document.addEventListener('click',e=>{const hl=e.target.closest('.hl');if(hl)t1('highlight-'+hl.textContent.trim().toLowerCase().replace(/\s+/g,'-'));if(e.target.closest('.share'))t1('share-tapped');if(e.target.closest('.inf,.more'))t1('story-sheet-opened')},true);
 })();
+(function(){const s=document.createElement('script');s.async=true;s.src='//gc.zgo.at/count.js';s.dataset.goatcounter=`https://${window.PROJECT.analytics}.goatcounter.com/count`;document.body.appendChild(s)})();
 </script>
-<script data-goatcounter="https://misk-preview.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
