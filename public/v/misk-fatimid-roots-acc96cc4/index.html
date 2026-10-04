@@ -188,6 +188,26 @@ ul{padding-left:18px}li{margin:4px 0}
 .speed{position:absolute;top:calc(64px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:7;padding:6px 12px;border-radius:99px;background:#000a;font-size:12.5px;font-weight:600;opacity:0;transition:opacity .15s;pointer-events:none;color:var(--ink)}
 .speed.on{opacity:1}
 .reel video,.viewer video{-webkit-touch-callout:none;user-select:none}
+.app{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.app input{-webkit-user-select:text;user-select:text}
+.reel,.viewer{touch-action:manipulation}
+.reel video,.viewer video{pointer-events:none}
+.bd-hero{text-align:center;padding:6px 0 4px}
+.bd-hero .pav{margin:0 auto 10px;width:72px;height:72px}
+.bd-hero .pav div{font-size:30px}
+.bd-tag{font-family:'Cormorant Garamond';font-size:26px;color:var(--ink);line-height:1.15;margin-top:6px}
+.bd-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:18px 0 4px;text-align:center}
+.bd-stats div{border:1px solid var(--line);border-radius:12px;padding:10px 2px}
+.bd-stats b{display:block;font-family:'Cormorant Garamond';font-size:24px;color:var(--gold)}
+.bd-stats span{font-size:10.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chips span{font-size:12px;padding:6px 10px;border-radius:99px;border:1px solid var(--line);color:#eadfc8}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.steps div{border-top:2px solid var(--gold);padding-top:8px;font-size:11.5px;color:var(--muted);line-height:1.4}
+.steps b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
+.tm{display:flex;gap:12px;padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;background:#0004}
+.tm .av{width:42px;height:42px;font-size:18px;flex:none}
+.tm b{font-size:14px}.tm em{display:block;font-style:normal;font-size:12px;color:var(--gold);margin:1px 0 6px}
+.tm p{font-size:12.5px;color:#ddd1b8;line-height:1.5}
 </style>
 </head>
 <body>
@@ -319,9 +339,31 @@ ul{padding-left:18px}li{margin:4px 0}
 
   <section class="sheet" id="cmSheet">
     <div class="grab"></div>
-    <div class="sh-h">Notes from MISK</div>
+    <div class="sh-h">Notes</div>
     <div class="sh-b" id="cmList"></div>
     <div class="addc"><input id="cmIn" placeholder="Add a note…" maxlength="300"><button id="cmPost">Post</button></div>
+  </section>
+  <section class="sheet" id="brandSheet">
+    <div class="grab"></div>
+    <div class="sh-h">About MISK Productions</div>
+    <div class="sh-b">
+      <div class="bd-hero"><div class="pav"><div>M</div></div>
+        <div class="st-kick">Video production &amp; content studio · Dubai · Mumbai</div>
+        <div class="bd-tag">Stories crafted for the screen they live on.</div></div>
+      <div class="bd-stats"><div><b>5</b><span>platforms</span></div><div><b>24</b><span>reels / week</span></div><div><b>52</b><span>posts / week</span></div><div><b>9:16</b><span>native</span></div></div>
+      <h4>Who we are</h4>
+      <p>MISK Productions is a short-form video and content studio. We turn ideas into scroll-stopping stories: scripted, designed, edited and finished natively for every platform they appear on. Our focus is educational, heritage and faith-centred storytelling in Arabic, made with the care of film and the pace of social media.</p>
+      <h4>What we create</h4>
+      <div class="chips"><span>Short-form reels</span><span>Scripting in Arabic</span><span>Cinematic visuals</span><span>Editing &amp; colour</span><span>Sound design</span><span>Arabic subtitles</span><span>Carousels</span><span>Stories &amp; polls</span><span>X threads</span><span>Cross-platform scheduling</span></div>
+      <h4>Where it lives</h4>
+      <div class="chips"><span>YouTube Shorts</span><span>TikTok</span><span>Instagram</span><span>Facebook</span><span>X</span></div>
+      <h4>How we work</h4>
+      <div class="steps"><div><b>Brief</b>Your topics and goals</div><div><b>Script</b>Written and approved first</div><div><b>Produce</b>Visuals, edit, sound, captions</div><div><b>Deliver</b>Batched and scheduled</div></div>
+      <h4>The team</h4>
+      <div class="tm"><div class="av">S</div><div><b>M Shabbir Shk Yusuf Shakir</b><em>Production, technology &amp; design · Dubai</em><p>Graduate of Al-Jamea-tus-Saifiyah (11 years) with a BBA. Web, app and AI-automation developer, with experience in Instagram video marketing, graphic design and photography.</p></div></div>
+      <div class="tm"><div class="av">J</div><div><b>Juzer Merchant</b><em>Creative producer · Mumbai</em><p>MSc Science Media Production, Imperial College London. Has produced documentaries, corporate films, short films, cinematic trailers with motion graphics and event reels. Researcher at Blink Films and Creative Producer at Hexareel Studios.</p></div></div>
+      <p style="margin-top:16px;font-size:12.5px;color:var(--muted);text-align:center">Fatimid Roots is one example of how we work: research, story, craft and the platform, considered together.</p>
+    </div>
   </section>
   <div class="toast" id="toast"></div>
 </div>
@@ -331,12 +373,13 @@ const DRAFTS=[
  {src:'media/reel_v3.mp4',poster:'media/poster_v3.jpg',title:'Preview 2 · People & places',cap:'<b>Preview 2</b>: our second exploration, giving the journey a human face. It is a working version, kept here to show how the reel took shape.'},
  {src:'media/reel_v2.mp4',poster:'media/poster_v2.jpg',title:'Preview 1 · The lantern',cap:'<b>Preview 1</b>: the first concept, where we found the thread of a single lantern carrying the light from Cairo to India.'}
 ];
-const BEATS=[[2,'Opening','الجذور الفاطمية: a lantern opens the story.'],[8,'Cairo','A beacon of knowledge under the Fatimids.'],[14,'The journey','The du\'at carry the light to the ends of the earth.'],[24,'Gujarat','The da\'wat reaches India\'s coast, and the story of the Bohras begins.'],[33,'Traders of hearts','Known for skill in trade and faithfulness in their dealings.'],[40,'A way of life','Morals as a foundation, order as a path.'],[50,'Through the centuries','A tree of light: the legacy lives on, generation after generation.'],[60,'Today','Syedna Mufaddal Saifuddin, the 53rd Dai al-Mutlaq.']];
+const BEATS=[[2,'Opening','الجذور الفاطمية: a single lantern opens the story.'],[8,'Cairo','Al-Qahira, a beacon of knowledge under the Fatimids.'],[14,'The journey begins','The du\'at set out, carrying the light to the ends of the earth.'],[24,'Across the sea','From Egypt to Yemen, and on to the coast of India.'],[33,'Bohra','A name that means "trader" in Gujarati.'],[40,'Traders of hearts','Known for skill in trade and faithfulness in their dealings.'],[50,'A way of life','Morals as a foundation, order as a path, loyalty as belief.'],[60,'Today','A global community, its heart in India.']];
 const NOTES=[
- ['MISK Productions',1,'Thank you for watching. This is our new reel, shown exactly as it will appear on the feed. Swipe up to visit our profile and see the previews that led here.'],
- ['On the story',0,'We built the whole minute around one image, a lantern carried across the sea, so the journey stays clear and emotional from start to finish.'],
- ['On the sound',0,'The narration leads. The Arabic score stays soft underneath, like a breath, so every word is felt.'],
- ['On the words',0,'Every line was shaped to welcome a worldwide audience while honouring the history.']
+ ['MISK Productions',1,'Welcome, and thank you for taking the time to watch. This is the final cut of Fatimid Roots, presented exactly as your audience will see it on the feed. Swipe up to visit our profile, where you will also find the key previews that shaped it.'],
+ ['On the story',0,'The minute is built around a single image: a lantern carried from Cairo to the shores of India. It gives every viewer, whether familiar with this history or not, one clear thread to follow from the first second to the last.'],
+ ['On the sound',0,'The narration leads, in measured classical Arabic. Beneath it sits a soft Arabic score, present enough to carry emotion and quiet enough to let every word land.'],
+ ['On presentation',0,'Captions and key visuals sit clear of the platform interface, so nothing important is hidden behind buttons or captions on Instagram, TikTok or YouTube Shorts.'],
+ ['Your thoughts',0,'We would value your feedback. Leave a note below with your name and we will take it into account in the final delivery.']
 ];
 const $=s=>document.querySelector(s),feed=$('#feed'),mv=$('#mv'),vv=$('#vv');
 history.scrollRestoration='manual';feed.scrollTop=0;
@@ -378,7 +421,7 @@ let openId=null;
 function open(id){close();openId=id;$('#'+id).classList.add('on');$('#scrim').classList.add('on')}
 function close(){if(!openId)return;$('#'+openId).classList.remove('on');$('#scrim').classList.remove('on');openId=null}
 $('#scrim').onclick=close;
-main.querySelector('.cmb').onclick=()=>open('cmSheet');main.querySelector('.inf').onclick=()=>open('infoSheet');main.querySelector('.more').onclick=()=>open('infoSheet');$('#pStory').onclick=()=>open('infoSheet');
+main.querySelector('.cmb').onclick=()=>open('cmSheet');main.querySelector('.inf').onclick=()=>open('infoSheet');main.querySelector('.more').onclick=()=>open('infoSheet');$('#pStory').onclick=()=>open('brandSheet');
 document.querySelectorAll('.sheet').forEach(s=>{let y0=null;
  s.addEventListener('touchstart',e=>{if(e.target.closest('.grab,.sh-h'))y0=e.touches[0].clientY},{passive:true});
  s.addEventListener('touchmove',e=>{if(y0!==null)s.style.transform=`translateY(${Math.max(0,e.touches[0].clientY-y0)}px)`},{passive:true});
@@ -390,10 +433,17 @@ function seek(t){close();toMain();setTimeout(()=>{mv.currentTime=t;mv.play()},45
 document.querySelectorAll('.beat').forEach(b=>b.onclick=()=>seek(+b.dataset.t));
 /* notes */
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const WA_NUMBER='971509853309'; // MISK WhatsApp in international format, digits only
 function getMine(){try{return JSON.parse(localStorage.getItem('misk_notes')||'[]')}catch(_){return[]}}
-function renderNotes(){$('#cmList').innerHTML=NOTES.map(([n,p,t])=>`<div class="cm"><div class="av">M</div><div>${p?'<div class="pin">📌 PINNED</div>':''}<div class="n">${n}<span>misk.productions</span></div><p>${t}</p></div></div>`).join('')+getMine().map(t=>`<div class="cm"><div class="av">You</div><div><div class="n">You<span>on this device</span></div><p>${esc(t)}</p></div></div>`).join('')}
+function renderNotes(){$('#cmList').innerHTML=NOTES.map(([n,p,t])=>`<div class="cm"><div class="av">M</div><div>${p?'<div class="pin">📌 PINNED</div>':''}<div class="n">${n}<span>misk.productions</span></div><p>${t}</p></div></div>`).join('')+getMine().map(m=>`<div class="cm"><div class="av">${esc((m.n||'Y')[0].toUpperCase())}</div><div><div class="n">${esc(m.n||'You')}<span>sent to MISK</span></div><p>${esc(m.t||m)}</p></div></div>`).join('')}
 renderNotes();
-$('#cmPost').onclick=()=>{const v=$('#cmIn').value.trim();if(!v)return;const m=getMine();m.push(v);try{localStorage.setItem('misk_notes',JSON.stringify(m))}catch(_){}$('#cmIn').value='';renderNotes();toast('Note saved')};
+$('#cmIn').placeholder='Write a note to MISK…';$('#cmPost').textContent='Send';
+$('#cmIn').addEventListener('keydown',e=>{if(e.key==='Enter')$('#cmPost').click()});
+$('#cmPost').onclick=()=>{const v=$('#cmIn').value.trim();if(!v)return;let n='';try{n=localStorage.getItem('misk_name')||''}catch(_){}
+ if(!n){n=(prompt('Your name, so we know who the note is from:')||'').trim();if(!n)return;try{localStorage.setItem('misk_name',n)}catch(_){}}
+ const m=getMine();m.push({n,t:v});try{localStorage.setItem('misk_notes',JSON.stringify(m))}catch(_){}
+ $('#cmIn').value='';renderNotes();
+ const msg=`Fatimid Roots: note from ${n}\n\n${v}`;window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');toast('Opening WhatsApp to send your note')};
 /* profile */
 const PAL='<div class="st-pal"><i style="background:#070504"></i><i style="background:#3a2210"></i><i style="background:#7a1f16"></i><i style="background:#e3b869"></i><i style="background:#efe4cc"></i></div>';
 const HL=[
@@ -404,7 +454,7 @@ const HL=[
  {n:'The look',c:'media/f_33.jpg',s:[
   ['media/f_33.jpg','The look','Lamplight on old stone','A warm, filmic grade. Gold highlights, deep shadows and soft grain, as if the story were lit by the lantern itself.'],
   ['media/f_8.jpg','The look','Shaped by Fatimid arches','Transitions take the form of the keel arch, the signature of Fatimid architecture, so the design carries the history.'],
-  ['media/f_50.jpg','The look','Our palette','Night, cedar, Fatimid maroon, lamp gold and parchment.'+PAL]]},
+  ['media/f_33.jpg','The look','Our palette','Night, cedar, Fatimid maroon, lamp gold and parchment.'+PAL]]},
  {n:'The sound',c:'media/f_40.jpg',s:[
   ['media/f_40.jpg','The sound','The voice leads','Measured classical Arabic narration, with room to breathe between lines so each one lands.'],
   ['media/f_14.jpg','The sound','A score like a breath','A soft Arabic score sits beneath the voice. You feel it more than you hear it.']]},
@@ -454,5 +504,18 @@ function wireSpeed(root,v){let t=null,fast=false;const s=root.querySelector('.sp
  root.addEventListener('click',e=>{if(root._skip){e.stopImmediatePropagation();root._skip=false}},true)}
 wireSpeed($('#main'),mv);wireSpeed($('#viewer'),vv);
 </script>
+<script>
+/* analytics: GoatCounter (views, country, device, referrer) + a few events */
+function track(name){try{window.goatcounter&&window.goatcounter.count&&window.goatcounter.count({path:'misk/'+name,title:name,event:true})}catch(_){}}
+(function(){const once=new Set(),t1=n=>{if(!once.has(n)){once.add(n);track(n)}};
+ document.getElementById('go').addEventListener('click',()=>t1('reel-started'));
+ const mv=document.getElementById('mv');mv.addEventListener('timeupdate',()=>{const p=mv.currentTime/mv.duration;if(p>.5)t1('reel-watched-50pct');if(p>.95)t1('reel-watched-full')});
+ document.getElementById('toProfile').addEventListener('click',()=>t1('profile-opened'));
+ document.getElementById('feed').addEventListener('scroll',e=>{if(e.target.scrollTop>e.target.clientHeight*.6)t1('profile-opened')},{passive:true});
+ document.getElementById('pStory').addEventListener('click',()=>t1('brand-story-opened'));
+ document.addEventListener('click',e=>{const d=e.target.closest('.pt.draft');if(d)t1('preview-'+(+d.dataset.i===0?'2':'1')+'-opened');const hl=e.target.closest('.hl');if(hl)t1('highlight-'+hl.textContent.trim().toLowerCase().replace(/\s+/g,'-'));if(e.target.closest('#cmPost'))track('note-sent');if(e.target.closest('.share'))t1('share-tapped')},true);
+})();
+</script>
+<script data-goatcounter="https://misk-preview.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
